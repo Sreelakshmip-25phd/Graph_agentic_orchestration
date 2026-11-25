@@ -1,0 +1,1920 @@
+{
+ "regions": {
+  "core": [
+   "z1",
+   "z0",
+   "z2",
+   "z3"
+  ],
+  "east": [
+   "z6",
+   "z4",
+   "z5"
+  ],
+  "west": [
+   "z7",
+   "z8",
+   "z9"
+  ]
+ },
+ "rtt_bands_ms": {
+  "core-core": [
+   5,
+   10
+  ],
+  "east-east": [
+   10,
+   20
+  ],
+  "west-west": [
+   10,
+   20
+  ],
+  "core-east": [
+   30,
+   50
+  ],
+  "core-west": [
+   30,
+   50
+  ],
+  "east-west": [
+   60,
+   80
+  ]
+ },
+ "rtt_ms": {
+  "min": 6.4,
+  "max": 77.0,
+  "mean": 38.78
+ },
+ "new_types": {
+  "vehicle_teleop": {
+   "latency_ms": 25,
+   "data_locality": "any",
+   "priority": "high"
+  },
+  "vr_training_session": {
+   "latency_ms": 40,
+   "data_locality": "any",
+   "priority": "high"
+  },
+  "parking_occupancy": {
+   "latency_ms": 200,
+   "data_locality": "any",
+   "priority": "normal"
+  },
+  "log_archive_batch": {
+   "latency_ms": 2000,
+   "data_locality": "any",
+   "priority": "low"
+  }
+ },
+ "tight_types": [
+  "vehicle_teleop",
+  "vr_training_session"
+ ],
+ "similar_types": {
+  "vehicle_teleop": "drone_control",
+  "vr_training_session": "ar_session",
+  "parking_occupancy": "traffic_monitor"
+ },
+ "control_type": "log_archive_batch",
+ "type_mix_new_share": {
+  "vehicle_teleop": 0.1,
+  "vr_training_session": 0.1,
+  "parking_occupancy": 0.07,
+  "log_archive_batch": 0.03
+ },
+ "hotspot": [
+  [
+   "z1",
+   7200.0
+  ],
+  [
+   "z6",
+   8400.0
+  ],
+  [
+   "z7",
+   9600.0
+  ]
+ ],
+ "failures": [
+  [
+   2700.0,
+   "z3",
+   null
+  ],
+  [
+   5400.0,
+   "z6",
+   6
+  ],
+  [
+   7500.0,
+   "z1",
+   null
+  ],
+  [
+   9000.0,
+   "z7",
+   5
+  ],
+  [
+   10200.0,
+   "z4",
+   null
+  ]
+ ],
+ "repair_min_clip": [
+  10.0,
+  60.0
+ ],
+ "similarity": {
+  "backend": "minilm",
+  "similar_to": {
+   "ar_session": [
+    [
+     "vr_training_session",
+     0.731
+    ],
+    [
+     "drone_control",
+     0.713
+    ]
+   ],
+   "digital_twin": [
+    [
+     "iot_aggregator",
+     0.711
+    ],
+    [
+     "traffic_monitor",
+     0.682
+    ]
+   ],
+   "drone_control": [
+    [
+     "ar_session",
+     0.713
+    ],
+    [
+     "vehicle_teleop",
+     0.695
+    ]
+   ],
+   "federated_ml": [],
+   "iot_aggregator": [
+    [
+     "digital_twin",
+     0.711
+    ],
+    [
+     "traffic_monitor",
+     0.704
+    ]
+   ],
+   "log_archive_batch": [],
+   "parking_occupancy": [
+    [
+     "traffic_monitor",
+     0.87
+    ],
+    [
+     "iot_aggregator",
+     0.702
+    ]
+   ],
+   "traffic_monitor": [
+    [
+     "parking_occupancy",
+     0.87
+    ],
+    [
+     "iot_aggregator",
+     0.704
+    ]
+   ],
+   "vehicle_teleop": [
+    [
+     "vr_training_session",
+     0.715
+    ],
+    [
+     "drone_control",
+     0.695
+    ]
+   ],
+   "video_analytics": [
+    [
+     "traffic_monitor",
+     0.614
+    ],
+    [
+     "parking_occupancy",
+     0.611
+    ]
+   ],
+   "vr_training_session": [
+    [
+     "ar_session",
+     0.731
+    ],
+    [
+     "vehicle_teleop",
+     0.715
+    ]
+   ]
+  },
+  "checks": {
+   "vehicle_teleop->drone_control": true,
+   "vr_training_session->ar_session": true,
+   "parking_occupancy->traffic_monitor": true,
+   "log_archive_batch has no SIMILAR_TO edge": true
+  }
+ },
+ "K": 48.0,
+ "runs": {
+  "stress/0": {
+   "n": 1000,
+   "per_phase": {
+    "A": 400,
+    "B": 250,
+    "C": 350
+   },
+   "per_type": {
+    "ar_session": 108,
+    "traffic_monitor": 168,
+    "iot_aggregator": 164,
+    "video_analytics": 252,
+    "digital_twin": 53,
+    "federated_ml": 47,
+    "parking_occupancy": 50,
+    "vr_training_session": 63,
+    "log_archive_batch": 11,
+    "drone_control": 36,
+    "vehicle_teleop": 48
+   },
+   "failures": [
+    {
+     "t_s": 2700.0,
+     "zone": "z3",
+     "node": "n20",
+     "repair_min": 32.9
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n28",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n29",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n30",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n32",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n33",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n34",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 7500.0,
+     "zone": "z1",
+     "node": "n3",
+     "repair_min": 10.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n37",
+     "repair_min": 33.7
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n38",
+     "repair_min": 33.7
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n39",
+     "repair_min": 33.7
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n40",
+     "repair_min": 33.7
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n41",
+     "repair_min": 33.7
+    },
+    {
+     "t_s": 10200.0,
+     "zone": "z4",
+     "node": "n23",
+     "repair_min": 60.0
+    }
+   ],
+   "hotspot_share_of_origin": {
+    "z1": 0.231,
+    "z6": 0.179,
+    "z7": 0.224
+   }
+  },
+  "stress/1": {
+   "n": 1000,
+   "per_phase": {
+    "A": 400,
+    "B": 250,
+    "C": 350
+   },
+   "per_type": {
+    "ar_session": 121,
+    "video_analytics": 229,
+    "traffic_monitor": 166,
+    "iot_aggregator": 150,
+    "vehicle_teleop": 77,
+    "vr_training_session": 59,
+    "parking_occupancy": 42,
+    "digital_twin": 43,
+    "federated_ml": 53,
+    "drone_control": 42,
+    "log_archive_batch": 18
+   },
+   "failures": [
+    {
+     "t_s": 2700.0,
+     "zone": "z3",
+     "node": "n18",
+     "repair_min": 10.4
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n28",
+     "repair_min": 10.6
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n30",
+     "repair_min": 10.6
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n31",
+     "repair_min": 10.6
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n32",
+     "repair_min": 10.6
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n33",
+     "repair_min": 10.6
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n35",
+     "repair_min": 10.6
+    },
+    {
+     "t_s": 7500.0,
+     "zone": "z1",
+     "node": "n3",
+     "repair_min": 10.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n37",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n38",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n39",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n40",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n42",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 10200.0,
+     "zone": "z4",
+     "node": "n23",
+     "repair_min": 11.6
+    }
+   ],
+   "hotspot_share_of_origin": {
+    "z1": 0.282,
+    "z6": 0.205,
+    "z7": 0.198
+   }
+  },
+  "stress/2": {
+   "n": 1000,
+   "per_phase": {
+    "A": 400,
+    "B": 250,
+    "C": 350
+   },
+   "per_type": {
+    "iot_aggregator": 143,
+    "video_analytics": 248,
+    "traffic_monitor": 180,
+    "ar_session": 108,
+    "drone_control": 38,
+    "vr_training_session": 66,
+    "vehicle_teleop": 52,
+    "digital_twin": 59,
+    "federated_ml": 47,
+    "log_archive_batch": 19,
+    "parking_occupancy": 40
+   },
+   "failures": [
+    {
+     "t_s": 2700.0,
+     "zone": "z3",
+     "node": "n18",
+     "repair_min": 30.5
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n28",
+     "repair_min": 26.3
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n29",
+     "repair_min": 26.3
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n30",
+     "repair_min": 26.3
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n31",
+     "repair_min": 26.3
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n32",
+     "repair_min": 26.3
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n35",
+     "repair_min": 26.3
+    },
+    {
+     "t_s": 7500.0,
+     "zone": "z1",
+     "node": "n9",
+     "repair_min": 10.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n36",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n38",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n40",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n41",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n42",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 10200.0,
+     "zone": "z4",
+     "node": "n23",
+     "repair_min": 60.0
+    }
+   ],
+   "hotspot_share_of_origin": {
+    "z1": 0.222,
+    "z6": 0.282,
+    "z7": 0.19
+   }
+  },
+  "stress/3": {
+   "n": 1000,
+   "per_phase": {
+    "A": 400,
+    "B": 250,
+    "C": 350
+   },
+   "per_type": {
+    "video_analytics": 229,
+    "traffic_monitor": 178,
+    "iot_aggregator": 148,
+    "ar_session": 120,
+    "digital_twin": 48,
+    "vr_training_session": 56,
+    "vehicle_teleop": 65,
+    "parking_occupancy": 42,
+    "log_archive_batch": 18,
+    "drone_control": 39,
+    "federated_ml": 57
+   },
+   "failures": [
+    {
+     "t_s": 2700.0,
+     "zone": "z3",
+     "node": "n19",
+     "repair_min": 10.0
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n28",
+     "repair_min": 52.0
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n30",
+     "repair_min": 52.0
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n31",
+     "repair_min": 52.0
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n32",
+     "repair_min": 52.0
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n34",
+     "repair_min": 52.0
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n35",
+     "repair_min": 52.0
+    },
+    {
+     "t_s": 7500.0,
+     "zone": "z1",
+     "node": "n9",
+     "repair_min": 13.6
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n36",
+     "repair_min": 10.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n38",
+     "repair_min": 10.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n39",
+     "repair_min": 10.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n40",
+     "repair_min": 10.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n41",
+     "repair_min": 10.0
+    },
+    {
+     "t_s": 10200.0,
+     "zone": "z4",
+     "node": "n21",
+     "repair_min": 10.0
+    }
+   ],
+   "hotspot_share_of_origin": {
+    "z1": 0.256,
+    "z6": 0.282,
+    "z7": 0.241
+   }
+  },
+  "stress/4": {
+   "n": 1000,
+   "per_phase": {
+    "A": 400,
+    "B": 250,
+    "C": 350
+   },
+   "per_type": {
+    "video_analytics": 250,
+    "iot_aggregator": 160,
+    "ar_session": 122,
+    "traffic_monitor": 170,
+    "digital_twin": 44,
+    "drone_control": 33,
+    "federated_ml": 46,
+    "vr_training_session": 58,
+    "vehicle_teleop": 56,
+    "parking_occupancy": 44,
+    "log_archive_batch": 17
+   },
+   "failures": [
+    {
+     "t_s": 2700.0,
+     "zone": "z3",
+     "node": "n19",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n28",
+     "repair_min": 12.5
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n29",
+     "repair_min": 12.5
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n30",
+     "repair_min": 12.5
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n32",
+     "repair_min": 12.5
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n33",
+     "repair_min": 12.5
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n35",
+     "repair_min": 12.5
+    },
+    {
+     "t_s": 7500.0,
+     "zone": "z1",
+     "node": "n13",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n36",
+     "repair_min": 10.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n37",
+     "repair_min": 10.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n38",
+     "repair_min": 10.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n39",
+     "repair_min": 10.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n42",
+     "repair_min": 10.0
+    },
+    {
+     "t_s": 10200.0,
+     "zone": "z4",
+     "node": "n23",
+     "repair_min": 10.7
+    }
+   ],
+   "hotspot_share_of_origin": {
+    "z1": 0.214,
+    "z6": 0.205,
+    "z7": 0.302
+   }
+  },
+  "stress/5": {
+   "n": 1000,
+   "per_phase": {
+    "A": 400,
+    "B": 250,
+    "C": 350
+   },
+   "per_type": {
+    "iot_aggregator": 160,
+    "ar_session": 119,
+    "video_analytics": 237,
+    "traffic_monitor": 163,
+    "vehicle_teleop": 59,
+    "drone_control": 38,
+    "vr_training_session": 66,
+    "federated_ml": 54,
+    "parking_occupancy": 39,
+    "log_archive_batch": 14,
+    "digital_twin": 51
+   },
+   "failures": [
+    {
+     "t_s": 2700.0,
+     "zone": "z3",
+     "node": "n18",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n28",
+     "repair_min": 22.1
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n29",
+     "repair_min": 22.1
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n30",
+     "repair_min": 22.1
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n31",
+     "repair_min": 22.1
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n34",
+     "repair_min": 22.1
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n35",
+     "repair_min": 22.1
+    },
+    {
+     "t_s": 7500.0,
+     "zone": "z1",
+     "node": "n9",
+     "repair_min": 10.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n37",
+     "repair_min": 10.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n38",
+     "repair_min": 10.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n39",
+     "repair_min": 10.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n41",
+     "repair_min": 10.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n42",
+     "repair_min": 10.0
+    },
+    {
+     "t_s": 10200.0,
+     "zone": "z4",
+     "node": "n21",
+     "repair_min": 14.4
+    }
+   ],
+   "hotspot_share_of_origin": {
+    "z1": 0.222,
+    "z6": 0.274,
+    "z7": 0.216
+   }
+  },
+  "stress/6": {
+   "n": 1000,
+   "per_phase": {
+    "A": 400,
+    "B": 250,
+    "C": 350
+   },
+   "per_type": {
+    "ar_session": 119,
+    "traffic_monitor": 162,
+    "iot_aggregator": 131,
+    "video_analytics": 276,
+    "parking_occupancy": 37,
+    "drone_control": 40,
+    "federated_ml": 52,
+    "digital_twin": 51,
+    "vr_training_session": 53,
+    "vehicle_teleop": 57,
+    "log_archive_batch": 22
+   },
+   "failures": [
+    {
+     "t_s": 2700.0,
+     "zone": "z3",
+     "node": "n19",
+     "repair_min": 10.0
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n28",
+     "repair_min": 10.0
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n29",
+     "repair_min": 10.0
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n30",
+     "repair_min": 10.0
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n31",
+     "repair_min": 10.0
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n32",
+     "repair_min": 10.0
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n33",
+     "repair_min": 10.0
+    },
+    {
+     "t_s": 7500.0,
+     "zone": "z1",
+     "node": "n10",
+     "repair_min": 10.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n36",
+     "repair_min": 10.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n37",
+     "repair_min": 10.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n39",
+     "repair_min": 10.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n40",
+     "repair_min": 10.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n42",
+     "repair_min": 10.0
+    },
+    {
+     "t_s": 10200.0,
+     "zone": "z4",
+     "node": "n22",
+     "repair_min": 60.0
+    }
+   ],
+   "hotspot_share_of_origin": {
+    "z1": 0.291,
+    "z6": 0.222,
+    "z7": 0.25
+   }
+  },
+  "stress/7": {
+   "n": 1000,
+   "per_phase": {
+    "A": 400,
+    "B": 250,
+    "C": 350
+   },
+   "per_type": {
+    "video_analytics": 254,
+    "iot_aggregator": 157,
+    "ar_session": 121,
+    "traffic_monitor": 146,
+    "digital_twin": 48,
+    "vr_training_session": 67,
+    "drone_control": 44,
+    "parking_occupancy": 37,
+    "vehicle_teleop": 62,
+    "federated_ml": 44,
+    "log_archive_batch": 20
+   },
+   "failures": [
+    {
+     "t_s": 2700.0,
+     "zone": "z3",
+     "node": "n17",
+     "repair_min": 15.5
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n29",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n30",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n31",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n32",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n33",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n34",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 7500.0,
+     "zone": "z1",
+     "node": "n13",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n36",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n37",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n38",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n40",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n42",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 10200.0,
+     "zone": "z4",
+     "node": "n21",
+     "repair_min": 10.0
+    }
+   ],
+   "hotspot_share_of_origin": {
+    "z1": 0.231,
+    "z6": 0.282,
+    "z7": 0.207
+   }
+  },
+  "stress/8": {
+   "n": 1000,
+   "per_phase": {
+    "A": 400,
+    "B": 250,
+    "C": 350
+   },
+   "per_type": {
+    "traffic_monitor": 147,
+    "video_analytics": 280,
+    "iot_aggregator": 149,
+    "ar_session": 109,
+    "vr_training_session": 66,
+    "federated_ml": 51,
+    "vehicle_teleop": 58,
+    "parking_occupancy": 37,
+    "drone_control": 46,
+    "digital_twin": 40,
+    "log_archive_batch": 17
+   },
+   "failures": [
+    {
+     "t_s": 2700.0,
+     "zone": "z3",
+     "node": "n17",
+     "repair_min": 42.3
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n28",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n30",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n32",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n33",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n34",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n35",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 7500.0,
+     "zone": "z1",
+     "node": "n6",
+     "repair_min": 38.3
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n37",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n38",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n39",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n40",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n41",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 10200.0,
+     "zone": "z4",
+     "node": "n23",
+     "repair_min": 10.0
+    }
+   ],
+   "hotspot_share_of_origin": {
+    "z1": 0.265,
+    "z6": 0.179,
+    "z7": 0.224
+   }
+  },
+  "stress/9": {
+   "n": 1000,
+   "per_phase": {
+    "A": 400,
+    "B": 250,
+    "C": 350
+   },
+   "per_type": {
+    "video_analytics": 257,
+    "iot_aggregator": 157,
+    "traffic_monitor": 169,
+    "ar_session": 99,
+    "federated_ml": 51,
+    "digital_twin": 52,
+    "vr_training_session": 60,
+    "drone_control": 36,
+    "parking_occupancy": 34,
+    "log_archive_batch": 18,
+    "vehicle_teleop": 67
+   },
+   "failures": [
+    {
+     "t_s": 2700.0,
+     "zone": "z3",
+     "node": "n19",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n28",
+     "repair_min": 17.1
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n29",
+     "repair_min": 17.1
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n30",
+     "repair_min": 17.1
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n31",
+     "repair_min": 17.1
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n32",
+     "repair_min": 17.1
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n33",
+     "repair_min": 17.1
+    },
+    {
+     "t_s": 7500.0,
+     "zone": "z1",
+     "node": "n8",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n37",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n39",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n40",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n41",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n42",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 10200.0,
+     "zone": "z4",
+     "node": "n23",
+     "repair_min": 60.0
+    }
+   ],
+   "hotspot_share_of_origin": {
+    "z1": 0.248,
+    "z6": 0.256,
+    "z7": 0.25
+   }
+  },
+  "stress_dev/100": {
+   "n": 1000,
+   "per_phase": {
+    "A": 400,
+    "B": 250,
+    "C": 350
+   },
+   "per_type": {
+    "traffic_monitor": 181,
+    "ar_session": 102,
+    "video_analytics": 229,
+    "iot_aggregator": 154,
+    "parking_occupancy": 34,
+    "federated_ml": 62,
+    "digital_twin": 61,
+    "vr_training_session": 58,
+    "drone_control": 46,
+    "log_archive_batch": 12,
+    "vehicle_teleop": 61
+   },
+   "failures": [
+    {
+     "t_s": 2700.0,
+     "zone": "z3",
+     "node": "n17",
+     "repair_min": 52.9
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n28",
+     "repair_min": 11.0
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n29",
+     "repair_min": 11.0
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n31",
+     "repair_min": 11.0
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n33",
+     "repair_min": 11.0
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n34",
+     "repair_min": 11.0
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n35",
+     "repair_min": 11.0
+    },
+    {
+     "t_s": 7500.0,
+     "zone": "z1",
+     "node": "n10",
+     "repair_min": 10.8
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n36",
+     "repair_min": 20.1
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n37",
+     "repair_min": 20.1
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n40",
+     "repair_min": 20.1
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n41",
+     "repair_min": 20.1
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n42",
+     "repair_min": 20.1
+    },
+    {
+     "t_s": 10200.0,
+     "zone": "z4",
+     "node": "n23",
+     "repair_min": 10.0
+    }
+   ],
+   "hotspot_share_of_origin": {
+    "z1": 0.256,
+    "z6": 0.214,
+    "z7": 0.259
+   }
+  },
+  "stress_dev/101": {
+   "n": 1000,
+   "per_phase": {
+    "A": 400,
+    "B": 250,
+    "C": 350
+   },
+   "per_type": {
+    "traffic_monitor": 161,
+    "video_analytics": 259,
+    "ar_session": 105,
+    "iot_aggregator": 132,
+    "vehicle_teleop": 69,
+    "federated_ml": 47,
+    "digital_twin": 49,
+    "parking_occupancy": 50,
+    "vr_training_session": 71,
+    "log_archive_batch": 13,
+    "drone_control": 44
+   },
+   "failures": [
+    {
+     "t_s": 2700.0,
+     "zone": "z3",
+     "node": "n18",
+     "repair_min": 21.5
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n30",
+     "repair_min": 22.5
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n31",
+     "repair_min": 22.5
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n32",
+     "repair_min": 22.5
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n33",
+     "repair_min": 22.5
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n34",
+     "repair_min": 22.5
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n35",
+     "repair_min": 22.5
+    },
+    {
+     "t_s": 7500.0,
+     "zone": "z1",
+     "node": "n13",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n36",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n38",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n39",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n40",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n41",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 10200.0,
+     "zone": "z4",
+     "node": "n21",
+     "repair_min": 10.0
+    }
+   ],
+   "hotspot_share_of_origin": {
+    "z1": 0.299,
+    "z6": 0.239,
+    "z7": 0.25
+   }
+  },
+  "stress_dev/102": {
+   "n": 1000,
+   "per_phase": {
+    "A": 400,
+    "B": 250,
+    "C": 350
+   },
+   "per_type": {
+    "ar_session": 110,
+    "video_analytics": 259,
+    "iot_aggregator": 155,
+    "traffic_monitor": 165,
+    "drone_control": 46,
+    "vr_training_session": 65,
+    "log_archive_batch": 20,
+    "parking_occupancy": 41,
+    "federated_ml": 40,
+    "vehicle_teleop": 56,
+    "digital_twin": 43
+   },
+   "failures": [
+    {
+     "t_s": 2700.0,
+     "zone": "z3",
+     "node": "n17",
+     "repair_min": 13.8
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n28",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n29",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n31",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n32",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n33",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n34",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 7500.0,
+     "zone": "z1",
+     "node": "n13",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n36",
+     "repair_min": 24.9
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n37",
+     "repair_min": 24.9
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n39",
+     "repair_min": 24.9
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n41",
+     "repair_min": 24.9
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n42",
+     "repair_min": 24.9
+    },
+    {
+     "t_s": 10200.0,
+     "zone": "z4",
+     "node": "n22",
+     "repair_min": 10.0
+    }
+   ],
+   "hotspot_share_of_origin": {
+    "z1": 0.248,
+    "z6": 0.274,
+    "z7": 0.216
+   }
+  },
+  "stress_dev/103": {
+   "n": 1000,
+   "per_phase": {
+    "A": 400,
+    "B": 250,
+    "C": 350
+   },
+   "per_type": {
+    "video_analytics": 258,
+    "ar_session": 102,
+    "traffic_monitor": 159,
+    "iot_aggregator": 147,
+    "parking_occupancy": 39,
+    "digital_twin": 64,
+    "federated_ml": 55,
+    "vehicle_teleop": 59,
+    "vr_training_session": 59,
+    "log_archive_batch": 20,
+    "drone_control": 38
+   },
+   "failures": [
+    {
+     "t_s": 2700.0,
+     "zone": "z3",
+     "node": "n18",
+     "repair_min": 10.0
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n28",
+     "repair_min": 13.6
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n29",
+     "repair_min": 13.6
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n30",
+     "repair_min": 13.6
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n31",
+     "repair_min": 13.6
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n32",
+     "repair_min": 13.6
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n33",
+     "repair_min": 13.6
+    },
+    {
+     "t_s": 7500.0,
+     "zone": "z1",
+     "node": "n4",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n36",
+     "repair_min": 10.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n38",
+     "repair_min": 10.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n39",
+     "repair_min": 10.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n41",
+     "repair_min": 10.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n42",
+     "repair_min": 10.0
+    },
+    {
+     "t_s": 10200.0,
+     "zone": "z4",
+     "node": "n21",
+     "repair_min": 16.0
+    }
+   ],
+   "hotspot_share_of_origin": {
+    "z1": 0.256,
+    "z6": 0.145,
+    "z7": 0.362
+   }
+  },
+  "stress_dev/104": {
+   "n": 1000,
+   "per_phase": {
+    "A": 400,
+    "B": 250,
+    "C": 350
+   },
+   "per_type": {
+    "iot_aggregator": 158,
+    "traffic_monitor": 182,
+    "video_analytics": 244,
+    "ar_session": 103,
+    "vr_training_session": 47,
+    "federated_ml": 46,
+    "drone_control": 54,
+    "parking_occupancy": 48,
+    "vehicle_teleop": 62,
+    "digital_twin": 34,
+    "log_archive_batch": 22
+   },
+   "failures": [
+    {
+     "t_s": 2700.0,
+     "zone": "z3",
+     "node": "n19",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n28",
+     "repair_min": 10.0
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n29",
+     "repair_min": 10.0
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n31",
+     "repair_min": 10.0
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n33",
+     "repair_min": 10.0
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n34",
+     "repair_min": 10.0
+    },
+    {
+     "t_s": 5400.0,
+     "zone": "z6",
+     "node": "n35",
+     "repair_min": 10.0
+    },
+    {
+     "t_s": 7500.0,
+     "zone": "z1",
+     "node": "n11",
+     "repair_min": 60.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n36",
+     "repair_min": 10.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n38",
+     "repair_min": 10.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n39",
+     "repair_min": 10.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n40",
+     "repair_min": 10.0
+    },
+    {
+     "t_s": 9000.0,
+     "zone": "z7",
+     "node": "n41",
+     "repair_min": 10.0
+    },
+    {
+     "t_s": 10200.0,
+     "zone": "z4",
+     "node": "n23",
+     "repair_min": 21.3
+    }
+   ],
+   "hotspot_share_of_origin": {
+    "z1": 0.222,
+    "z6": 0.171,
+    "z7": 0.224
+   }
+  }
+ }
+}

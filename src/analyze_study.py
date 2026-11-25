@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Analyse the W-ref study (results/eval) and write the outputs.
+"""Analyse a study run (W-ref: results/, Stress: results_stress/).
 
   results/reproduction_check.csv  flat memory seeds 0-2 vs the earlier study
   results/summary.csv             system x metric, mean and 95% CI over seeds
@@ -9,7 +9,11 @@
   results/fig2_acceptance_over_time.png
   results/fig3_decision_trace.png
 
-Usage: python src/analyze_study.py [--dry-run]
+Stress (--workload stress) writes the same files into results_stress/,
+with the Stress metrics and gates S1-S8 (STUDY_STRESS.md) instead of
+G1-G5, plus path_breakdown.csv.
+
+Usage: python src/analyze_study.py [--workload wref|stress] [--dry-run]
 """
 import argparse
 import csv
@@ -23,7 +27,7 @@ import numpy as np
 from scipy import stats
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from config import REFERENCE, RESULTS
+from config import REFERENCE, RESULTS, SCEN
 
 SYSTEMS = ["graph_memory", "flat_memory", "no_memory"]
 LABEL = {"graph_memory": "Graph memory", "flat_memory": "Flat memory",
@@ -51,18 +55,58 @@ METRICS = [
     ("decision_ms_p95", "Decision latency p95 (ms)", "C", False),
     ("graph_lookup_ms_mean", "Graph lookup (ms)", "C", False),
 ]
+# Stress: W-ref metrics, the failure metric replaced by the per-event one,
+# plus the STUDY_STRESS.md metrics
+STRESS_METRICS = [m for m in METRICS if m[0] != "ar_drop_after_failure"] + [
+    ("sla_violation_rate_all_placements", "SLA-violation rate, incl. replans", "A", False),
+    ("sla_tight_types", "SLA-violation rate, tight new types", "A", False),
+    ("wasted_memory_attempts_per_100req", "Wasted memory attempts / 100 req", "B", False),
+    ("ar_drop_failures", "Acceptance drop after failures (mean)", "B", False),
+    ("ar_drop_zone_wide", "Acceptance drop after zone-wide failures", "B", False),
+    ("ar_change_hotspot", "Acceptance change after hotspot moves", "B", True),
+    ("prec_similar_types", "Memory precision, similar new types", "B", True),
+    ("prec_control_type", "Memory precision, control type", "B", True),
+]
+PATHS = ["local", "graph", "episodic", "procedural", "digest", "llm",
+         "preempt", "preempt_local", "llm_degraded", "llm_unresolved"]
 GROUP = {"A": "A. Task outcome", "B": "B. How memory helped", "C": "C. Memory cost"}
 COMPARISONS = [("graph_memory", "flat_memory"), ("graph_memory", "no_memory"),
                ("flat_memory", "no_memory")]
 
 
-def flatten(r):
-    out = {k: r.get(k) for k, *_ in METRICS}
+def _mean(xs):
+    xs = [x for x in xs if x is not None]
+    return float(np.mean(xs)) if xs else None
+
+
+def flatten(r, metrics=METRICS, rep=None):
+    out = {k: r.get(k) for k, *_ in metrics}
     for ph in "ABC":
         out[f"ar_{ph}"] = r["acceptance_per_phase"].get(ph)
     ad = r.get("adaptation_after_failure") or []
-    drops = [a["ar_drop"] for a in ad if a.get("ar_drop") is not None]
-    out["ar_drop_after_failure"] = float(np.mean(drops)) if drops else None
+    out["ar_drop_after_failure"] = _mean([a.get("ar_drop") for a in ad])
+    if rep is None:
+        return out
+    # Stress metrics (rep = scenario/stress/stress_report.json)
+    sbt = r.get("sla_by_type", {})
+    pl = sum(sbt.get(t, {}).get("placements", 0) for t in rep["tight_types"])
+    vi = sum(sbt.get(t, {}).get("violations", 0) for t in rep["tight_types"])
+    out["sla_tight_types"] = vi / pl if pl else None
+    fe = r.get("failure_events", [])
+    out["ar_drop_failures"] = _mean([e["ar_drop"] for e in fe])
+    out["ar_drop_zone_wide"] = _mean([e["ar_drop"] for e in fe if e["zone_wide"]])
+    out["ar_change_hotspot"] = _mean([h["ar_change"] for h in r.get("hotspot_moves", [])])
+    fw = r.get("first_window_acceptance_by_type", {})
+    out["new_similar_first30"] = _mean([fw.get(t, {}).get("acceptance")
+                                        for t in rep["similar_types"]])
+    out["new_control_first30"] = fw.get(rep["control_type"], {}).get("acceptance")
+    pbt = r.get("memory_precision_by_type", {})
+    tries = sum(pbt.get(t, {}).get("first_tries", 0) for t in rep["similar_types"])
+    ok = sum(pbt.get(t, {}).get("ok", 0) for t in rep["similar_types"])
+    out["prec_similar_types"] = ok / tries if tries else None
+    c = pbt.get(rep["control_type"], {})
+    out["prec_control_type"] = (c["ok"] / c["first_tries"]
+                                if c.get("first_tries") else None)
     return out
 
 
@@ -101,19 +145,28 @@ def main():
     warnings.filterwarnings("ignore", category=RuntimeWarning)
     ap = argparse.ArgumentParser()
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--workload", choices=["wref", "stress"], default="wref")
     args = ap.parse_args()
-    base = os.path.join(RESULTS, "dryrun") if args.dry_run else RESULTS
+    stress = args.workload == "stress"
+    res = RESULTS + "_stress" if stress else RESULTS
+    base = os.path.join(res, "dryrun") if args.dry_run else res
     runs = load(os.path.join(base, "eval"))
     if not runs:
         sys.exit(f"no results in {base}/eval")
     seeds = sorted({s for _, s in runs})
-    flat = {k: flatten(v) for k, v in runs.items()}
+    global METRICS
+    srep = None
+    if stress:
+        srep = json.load(open(os.path.join(SCEN, "stress", "stress_report.json")))
+        srep["similar_types"] = list(srep["similar_types"])
+        METRICS = STRESS_METRICS
+    flat = {k: flatten(v, METRICS, srep) for k, v in runs.items()}
     model = sorted({v.get("model") for v in runs.values()})
     print(f"runs: {len(runs)} | seeds: {seeds} | model: {model}")
 
     # ---------------------------------------------- reproduction check
     rep_rows = []
-    for s in (0, 1, 2):
+    for s in ((0, 1, 2) if not stress else ()):
         ref_p = os.path.join(REFERENCE, f"flat_seed{s}.json")
         if ("flat_memory", s) not in runs or not os.path.exists(ref_p):
             continue
@@ -207,6 +260,18 @@ def main():
              and flat[(sysn, s)][k] is not None]
         return float(np.mean(v)) if v else None
 
+    if stress:
+        g = stress_gates(pr, mean)
+        path_breakdown(base, runs, seeds)
+        json.dump({"model": model, "seeds": seeds, "gates": g,
+                   "scipy": __import__("scipy").__version__,
+                   "definitions": "see STUDY_STRESS.md"},
+                  open(os.path.join(base, "gates.json"), "w"), indent=1)
+        print(json.dumps(g, indent=1))
+        figures(base, runs, flat, seeds, paired)
+        print(f"outputs written to {base}")
+        return
+
     g = {}
     g["G1_flat_reproduces_earlier_study"] = rep_ok
     r = pr("graph_memory", "flat_memory", "acceptance_overall")
@@ -234,6 +299,56 @@ def main():
 
     figures(base, runs, flat, seeds, paired)
     print(f"outputs written to {base}")
+
+
+def stress_gates(pr, mean):
+    """STUDY_STRESS.md, pre-registered checks S1-S8."""
+    def sig(a, b, k, sign):
+        r = pr(a, b, k)
+        return None if r is None else bool(r["significant"] and
+                                           np.sign(r["mean_diff"]) == sign)
+    g = {}
+    g["S1_graph_fewer_sla_violations_than_flat"] = sig(
+        "graph_memory", "flat_memory", "sla_violation_rate", -1)
+    r = pr("graph_memory", "flat_memory", "acceptance_overall")
+    g["S2_graph_acceptance_not_worse_than_flat"] = (
+        None if r is None or r["ci95"] is None else r["mean_diff"] - r["ci95"] > -0.01)
+    g["S3_graph_acceptance_higher"] = sig("graph_memory", "flat_memory",
+                                          "acceptance_overall", 1)
+    g["S4_graph_fewer_wasted_attempts"] = sig("graph_memory", "flat_memory",
+                                              "wasted_memory_attempts_per_100req", -1)
+    g["S5_graph_smaller_drop_after_failures"] = sig("graph_memory", "flat_memory",
+                                                    "ar_drop_failures", -1)
+    # the control type rarely escalates, so its precision is reported in
+    # summary.csv when it exists, not tested (STUDY_STRESS.md, S6)
+    g["S6_graph_more_precise_on_similar_new_types"] = sig(
+        "graph_memory", "flat_memory", "prec_similar_types", 1)
+    ok = [sig(a, "no_memory", "llm_reach_per_100req", -1)
+          for a in ("graph_memory", "flat_memory")]
+    g["S7_memory_reduces_llm_reach"] = None if None in ok else all(ok)
+    tg, tf = mean("graph_memory", "llm_prompt_tokens_per_100req"), \
+        mean("flat_memory", "llm_prompt_tokens_per_100req")
+    g["S8_graph_prompt_overhead_at_most_25pct"] = (
+        None if not tg or not tf else tg / tf - 1 <= 0.25)
+    return g
+
+
+def path_breakdown(base, runs, seeds):
+    """B9: where escalations were resolved, per 100 requests, per system."""
+    with open(os.path.join(base, "path_breakdown.csv"), "w", newline="") as f:
+        w = csv.writer(f)
+        w.writerow(["system", "path", "per_100_requests_mean", "sla_violations_mean"])
+        for sysn in SYSTEMS:
+            rs = [runs[(sysn, s)] for s in seeds if (sysn, s) in runs]
+            if not rs:
+                continue
+            for p in PATHS:
+                v = [100 * r["paths"].get(f"esc_{p}", 0) / r["n_requests"] for r in rs]
+                sv = [r.get("sla_violations_by_path", {}).get(p, {}).get("violations", 0)
+                      for r in rs]
+                if any(v) or any(sv):
+                    w.writerow([sysn, p, round(float(np.mean(v)), 2),
+                                round(float(np.mean(sv)), 2)])
 
 
 def _style(ax):
@@ -301,12 +416,23 @@ def figures(base, runs, flat, seeds, paired):
         ax.plot(t, y, color=COLOR[sysn], lw=2, label=LABEL[sysn])
     for tb in (1, 2):
         ax.axvline(tb, color=INK2, lw=0.6, ls=":")
-    tf = [a["t_fail"] / 3600 for r in runs.values()
-          for a in r.get("adaptation_after_failure", [])]
-    if tf:
-        ax.axvline(np.mean(tf), color=INK2, lw=0.8, ls="--")
-        ax.text(np.mean(tf), 0.02, " node failure", color=INK2, fontsize=7,
-                transform=ax.get_xaxis_transform())
+    r0 = next(iter(runs.values()))
+    if r0.get("failure_events") and len(r0["failure_events"]) > 1:
+        for e in r0["failure_events"]:
+            x = e["t_fail"] / 3600
+            ax.axvline(x, color=INK2, lw=1.0 if e["zone_wide"] else 0.6, ls="--")
+            ax.text(x, 0.02, f" {e['zone']}" + (" zone" if e["zone_wide"] else ""),
+                    color=INK2, fontsize=6, transform=ax.get_xaxis_transform())
+        for h in r0.get("hotspot_moves", []):
+            ax.text(h["t"] / 3600, 0.93, f"→{h['zone']}", color=INK2, fontsize=6,
+                    ha="center", transform=ax.get_xaxis_transform())
+    else:
+        tf = [a["t_fail"] / 3600 for r in runs.values()
+              for a in r.get("adaptation_after_failure", [])]
+        if tf:
+            ax.axvline(np.mean(tf), color=INK2, lw=0.8, ls="--")
+            ax.text(np.mean(tf), 0.02, " node failure", color=INK2, fontsize=7,
+                    transform=ax.get_xaxis_transform())
     for i, ph in enumerate("ABC"):
         ax.text(i + 0.5, 1.01, f"phase {ph}", ha="center", color=INK2, fontsize=7,
                 transform=ax.get_xaxis_transform())

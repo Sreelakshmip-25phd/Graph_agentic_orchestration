@@ -16,10 +16,13 @@ src/
   run_study.py           tune / eval runner (checkpointed, resumable)
   analyze_study.py       summary, paired statistics, gates, figures
   make_wref_workloads.py regenerates W-ref seeds (checks seeds 0-2 are identical)
+  make_stress_workloads.py builds the Stress scenario and workloads
   sim_engine.py, zoa_agent.py, llm_client.py, phase1_*.py   from the earlier study
 scenario/                topology, service catalog, intent sentences, calibration
 workloads/wref/          evaluation workloads, seeds 0-9
 workloads/dev/           tuning workloads, seeds 100-104 (never reported)
+workloads/stress{,_dev}/ Stress workloads (STUDY_STRESS.md)
+scenario/stress/         Stress topology, catalog, intent sentences, report
 reference_results/       the earlier study's flat-memory results (reproduction check)
 local_llm/               llama.cpp server helpers (same as the earlier study)
 ```
@@ -58,6 +61,28 @@ On Windows PowerShell use `$env:LOCAL_LLM_URL="http://127.0.0.1:8080"` and `pyth
   30–45 min for tune and 1–1.5 h for eval.
 - Check the code path without an LLM: `python3 src/run_study.py --stage eval --dry-run --seeds 0`
   (results go to `results/dryrun/`, which is not committed).
+
+## Stress workload
+
+Protocol: [STUDY_STRESS.md](STUDY_STRESS.md). Regional RTT (5–80 ms), five
+failures (two zone-wide), a moving phase-C hotspot and four new service
+types; every condition's LLM prompt carries the origin's RTT row, and the
+digest scan skips zones that would break the latency budget. Workloads are
+committed (`workloads/stress/`, `workloads/stress_dev/`, built by
+`src/make_stress_workloads.py`; scenario files in `scenario/stress/`).
+
+```bash
+python3 src/run_study.py --workload stress --stage tune
+python3 src/run_study.py --workload stress --stage eval
+python3 src/analyze_study.py --workload stress
+```
+
+- **tune**: 3 weight settings × 5 Stress dev seeds = 15 runs; **eval**: 3 conditions × 10 seeds = 30 runs.
+- Results go to `results_stress/` (same layout as `results/`, plus
+  `path_breakdown.csv`; gates S1–S8 in `gates.json`). LLM caches are separate
+  (`llm_cache/stress_*`).
+- Run `analyze_study.py` on one machine only: Wilcoxon p-values with ties
+  differ between scipy versions; `gates.json` records the version.
 
 ## Outputs (`results/`)
 

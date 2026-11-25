@@ -4,6 +4,7 @@ data_foundation/
 # runtime artefacts
 llm_cache/
 results/dryrun/
+results_stress/dryrun/
 *.log
 
 # local LLM weights

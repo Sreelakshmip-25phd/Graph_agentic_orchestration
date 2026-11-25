@@ -22,6 +22,8 @@ DIGEST_S = 5.0
 POLICY_TICK_S = 120.0
 ROLLING_BIN_S = 300.0      # bin width for the acceptance-over-time series
 ADAPT_WINDOW_S = 1800.0    # window before/after a failure for adaptation
+HOTSPOT_WINDOW_S = 600.0   # window before/after a hotspot move (Stress)
+NEW_TYPE_WINDOW_S = 1800.0  # a type's first 30 min (Stress)
 
 
 def load_workload(path):
@@ -33,7 +35,8 @@ def load_workload(path):
 
 
 class Simulation:
-    def __init__(s, topo, reqs, events, orch, required_fields, slm_system):
+    def __init__(s, topo, reqs, events, orch, required_fields, slm_system,
+                 adapt_window_s=None):
         s.sim, s.topo, s.orch = Sim(), topo, orch
         s.required_fields, s.slm_system = required_fields, slm_system
         s.nodes, s.zones = {}, {}
@@ -53,6 +56,8 @@ class Simulation:
         s.reqs, s.events = reqs, events
         s._peak, s._pending = defaultdict(float), 0
         s.failure_times = {}
+        s.adapt_window_s = adapt_window_s or ADAPT_WINDOW_S
+        s.placements = []  # every placement: fresh, replan, migration
 
     def _hook(s, name, *a):
         fn = getattr(s.orch, name, None)
@@ -130,6 +135,10 @@ class Simulation:
         victim first, place, then try to migrate the victim."""
         victim = s._evict_victim(t, req) if depth < 6 else None
         zid = s._place_on(t, req, nid, remaining=remaining)
+        s.placements.append({"t": t, "origin": req["origin_zone"], "zone": zid,
+                             "budget": req.get("latency_ms"),
+                             "st": req.get("service_type"),
+                             "fresh": remaining is None})
         if victim is not None:
             s._migrate_victim(t, victim, depth=depth + 1)
         return zid
@@ -156,12 +165,15 @@ class Simulation:
                                  s.required_fields, s.slm_system)
         dms = (time.time() - t0) * 1000
         s.lat_log.append({"t": t, "phase": req["phase"], "ms": dms,
+                          "st": req.get("service_type"),
                           "placed": nid is not None, "path": path})
         if nid is None:
             s.services[req["req_id"]]["state"] = "REJECTED"
             s.event_log.append({"t": t, "ev": "reject", "phase": req["phase"]})
             return
+        k = len(s.placements)
         zid = s._commit_placement(t, req, nid)
+        s.placements[k]["path"] = path
         s.event_log.append({"t": t, "ev": "place", "phase": req["phase"],
                             "zone": zid, "origin": req["origin_zone"],
                             "latency_budget_ms": req.get("latency_ms"),
@@ -297,6 +309,73 @@ class Simulation:
                                            if pre is not None and post is not None
                                            else None)})
 
+        # ---- Stress metrics (also computed for W-ref; not used there) ----
+        def net_ms(p):
+            return s.intra_ms + (s.rtt.get((p["origin"], p["zone"]), 0.0)
+                                 if p["zone"] != p["origin"] else 0.0)
+
+        by_type = defaultdict(lambda: [0, 0])
+        all_viol = 0
+        for p in s.placements:
+            if p["budget"] is None:
+                continue
+            v = int(net_ms(p) > p["budget"])
+            all_viol += v
+            by_type[p["st"]][0] += 1
+            by_type[p["st"]][1] += v
+        n_pl = sum(v[0] for v in by_type.values())
+        by_path = defaultdict(lambda: [0, 0])
+        for p in s.placements:
+            if p["budget"] is not None:
+                k = p.get("path") or ("fresh" if p["fresh"] else "replan_or_migration")
+                by_path[k][0] += 1
+                by_path[k][1] += int(net_ms(p) > p["budget"])
+        sla_by_path = {k: {"placements": a, "violations": b}
+                       for k, (a, b) in sorted(by_path.items()) if b}
+        sla_by_type = {st: {"placements": a, "violations": b,
+                            "rate": round(b / a, 4) if a else None}
+                       for st, (a, b) in sorted(by_type.items())}
+
+        W = s.adapt_window_s
+        groups = defaultdict(list)
+        for nid, tf in s.failure_times.items():
+            groups[tf].append(nid)
+        failure_events = []
+        for tf in sorted(groups):
+            nodes = sorted(groups[tf])
+            pre, npre = window_ar(tf - W, tf)
+            post, npost = window_ar(tf, tf + W)
+            failure_events.append({
+                "t_fail": tf, "zone": s.nodes[nodes[0]].zone_id, "nodes": nodes,
+                "zone_wide": len(nodes) > 1, "window_s": W,
+                "ar_before": pre, "n_before": npre, "ar_after": post,
+                "n_after": npost,
+                "ar_drop": (round(pre - post, 3) if pre is not None
+                            and post is not None else None)})
+
+        hotspot_moves = []
+        for e in s.events:
+            if e.get("type") != "hotspot_move" or e["t_s"] <= 2 * 3600.0:
+                continue
+            tm = e["t_s"]
+            pre, npre = window_ar(tm - HOTSPOT_WINDOW_S, tm)
+            post, npost = window_ar(tm, tm + HOTSPOT_WINDOW_S)
+            hotspot_moves.append({
+                "t": tm, "zone": e["zone"], "ar_before": pre, "ar_after": post,
+                "n_before": npre, "n_after": npost,
+                "ar_change": (round(post - pre, 3) if pre is not None
+                              and post is not None else None)})
+
+        first_t = {}
+        for x in s.lat_log:
+            first_t.setdefault(x["st"], x["t"])
+        first_window = {}
+        for st, t0 in sorted(first_t.items()):
+            xs = [x["placed"] for x in s.lat_log
+                  if x["st"] == st and t0 <= x["t"] < t0 + NEW_TYPE_WINDOW_S]
+            first_window[st] = {"t_first": t0, "n": len(xs),
+                                "acceptance": round(float(np.mean(xs)), 3) if xs else None}
+
         lm = [x["ms"] for x in s.lat_log]
         return {
             "acceptance_overall": round(placed / n, 3),
@@ -316,6 +395,13 @@ class Simulation:
             "decision_ms_p95": round(float(np.percentile(lm, 95)), 2) if lm else 0,
             "acceptance_over_time": rolling,
             "adaptation_after_failure": adaptation,
+            "sla_violation_rate_all_placements": (round(all_viol / n_pl, 4)
+                                                  if n_pl else 0.0),
+            "sla_by_type": sla_by_type,
+            "sla_violations_by_path": sla_by_path,
+            "failure_events": failure_events,
+            "hotspot_moves": hotspot_moves,
+            "first_window_acceptance_by_type": first_window,
             "states": dict(states),
             "invariants": {"terminal": states.get("REQUESTED", 0) == 0,
                            "closed": states.get("REJECTED", 0) + placed == n,

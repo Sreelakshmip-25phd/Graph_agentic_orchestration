@@ -35,13 +35,21 @@ RULE_MIN_EPS, RULE_MIN_FRAC = 5, 0.6
 MAX_PREEMPT_CANDIDATES = 3
 
 
-def goa_decide_sys(semantic, graph=False):
+RTT_PROMPT_NOTE = """
+"rtt_ms_from_origin" is the network delay from the request's origin zone to
+each zone. A zone whose rtt_ms_from_origin + 1 ms exceeds the request's
+latency_ms breaks its latency SLA; avoid such zones."""
+
+
+def goa_decide_sys(semantic, graph=False, rtt=False):
     extra = ("""
 "graph_memory" lists the top candidate zones from the coordinator's
 learned memory: success_rate for this service type and origin, how much
 evidence backs it, RTT from the origin, whether the zone failed recently,
 and whether a learned rule prefers it. Use it together with the digests."""
              if graph else "")
+    if rtt:
+        extra += RTT_PROMPT_NOTE
     return f"""You are the global coordinator of an edge-cloud
 orchestrator. Given a service request and per-zone capacity digests,
 choose the best target zone.{extra} Respond ONLY with JSON:
@@ -108,7 +116,8 @@ class ProceduralStore:
 
 class GlobalOrchestrationAgent:
     def __init__(s, lib, slm, llm, topo, semantic, solve_placement,
-                 memory="flat", graph_weights=None, type_sims=None):
+                 memory="flat", graph_weights=None, type_sims=None,
+                 rtt_in_prompt=False, digest_rtt_aware=False):
         assert memory in ("flat", "graph", "none"), memory
         s.lib, s.slm, s.llm, s.topo = lib, slm, llm, topo
         s.semantic = semantic
@@ -125,8 +134,22 @@ class GlobalOrchestrationAgent:
         s.preempted = {}  # req_id -> victim req_id, consumed by evaluator
         s.metrics = defaultdict(int)
         s.trace = defaultdict(int)  # graph decision trace: what decided
+        s.mem_first_by_type = defaultdict(lambda: [0, 0])  # st -> [tries, ok]
         s.zone_ids = [z["zone_id"] for z in topo["zones"]]
-        s.goa_decide_sys = goa_decide_sys(semantic, graph=memory == "graph")
+        # Stress, Option B: every condition's zone-choice prompt carries the
+        # origin's RTT row. Off for W-ref (the earlier study's prompt).
+        s.rtt_in_prompt = rtt_in_prompt
+        # Stress option: the cross-zone digest scan skips zones whose RTT
+        # from the origin would break the request's latency budget (same
+        # for every condition). Off for W-ref (the earlier study's scan).
+        s.digest_rtt_aware = digest_rtt_aware
+        s.intra_ms = float(topo.get("intra_zone_ms", 1.0))
+        s.rtt = {}
+        for key, ms in topo["inter_zone_rtt_ms"].items():
+            a, b = key.split("-")
+            s.rtt[(a, b)] = s.rtt[(b, a)] = float(ms)
+        s.goa_decide_sys = goa_decide_sys(semantic, graph=memory == "graph",
+                                          rtt=rtt_in_prompt)
 
     # ------------------------------------------------------------ memory
     def _remember(s, req, st, zone, ok, t):
@@ -146,13 +169,23 @@ class GlobalOrchestrationAgent:
         if s.gm is None:
             s.epi.record(st, req["origin_zone"], False, t)
 
-    def _mem_try(s, first, ok):
-        """Instrumentation only: memory precision / hit rate."""
+    def _breaks_budget(s, req, zone):
+        if not s.digest_rtt_aware or req.get("latency_ms") is None:
+            return False
+        rtt = 0.0 if zone == req["origin_zone"] else s.rtt.get((req["origin_zone"], zone), 0.0)
+        return s.intra_ms + rtt > req["latency_ms"]
+
+    def _mem_try(s, first, ok, st=None):
+        """Instrumentation only: memory precision / hit rate, also per
+        service type (Stress B8)."""
         s.metrics["mem_attempts"] += 1
         s.metrics["mem_success"] += int(ok)
         if first:
             s.metrics["mem_first_attempts"] += 1
             s.metrics["mem_first_success"] += int(ok)
+            if st is not None:
+                s.mem_first_by_type[st][0] += 1
+                s.mem_first_by_type[st][1] += int(ok)
 
     # --------------------------------------------------------- plumbing
     def on_digest_tick(s, t, zones):
@@ -269,7 +302,7 @@ class GlobalOrchestrationAgent:
         first = True
         for c in [c for c in ranked if s.gm.confident(c)][:MAX_XZ_CAND]:
             nid = s._try_zone(req, prof, c["zone"], tables)
-            s._mem_try(first, nid is not None)
+            s._mem_try(first, nid is not None, st)
             first = False
             if nid:
                 src, flags = s.gm.basis(c, ranked)
@@ -299,7 +332,7 @@ class GlobalOrchestrationAgent:
                     d = s.digest_cache.get(zone)
                     if d and d["top_cpu_free"] >= req["cpu_req"]:
                         nid = s._try_zone(req, prof, zone, tables)
-                        s._mem_try(first, nid is not None)
+                        s._mem_try(first, nid is not None, st)
                         first = False
                         if nid:
                             s.epi.record(st, zone, True, t)
@@ -308,7 +341,7 @@ class GlobalOrchestrationAgent:
                 rule = s.proc.match(st)
                 if rule:
                     nid = s._try_zone(req, prof, rule["action"]["prefer_zone"], tables)
-                    s._mem_try(first, nid is not None)
+                    s._mem_try(first, nid is not None, st)
                     if nid:
                         s.epi.record(st, rule["action"]["prefer_zone"], True, t)
                         s._log(t, st, "procedural")
@@ -318,7 +351,8 @@ class GlobalOrchestrationAgent:
             # to the LLM instead of an equally capable substitute.
             cands = sorted((d for z, d in s.digest_cache.items()
                             if z != req["origin_zone"] and t - d["t"] <= STALE_S
-                            and d["top_cpu_free"] >= req["cpu_req"]),
+                            and d["top_cpu_free"] >= req["cpu_req"]
+                            and not s._breaks_budget(req, d["zone"])),
                            key=lambda d: -d["top_cpu_free"])
             for d in cands[:MAX_XZ_CAND]:
                 nid = s._try_zone(req, prof, d["zone"], tables)
@@ -335,13 +369,18 @@ class GlobalOrchestrationAgent:
                                 "priority", "origin_zone")},
                    "profile": prof, "zone_digests": digests}
         key_extra = ""
+        if s.rtt_in_prompt:
+            o = req["origin_zone"]
+            payload["rtt_ms_from_origin"] = {
+                z: (0.0 if z == o else s.rtt.get((o, z))) for z in s.zone_ids}
+            key_extra += f"|o:{o}|lat:{req.get('latency_ms')}"
         if s.gm is not None:
             if ranked is None:
                 ranked = s.gm.rank(st, req["origin_zone"], t, s.digest_cache,
                                    req["cpu_req"])
             hints = s.gm.llm_hints(ranked)
             payload["graph_memory"] = hints
-            key_extra = "|g|" + json.dumps(hints, sort_keys=True)
+            key_extra += "|g|" + json.dumps(hints, sort_keys=True)
         try:
             out = s._ask_llm(t, "goa_decide", s.goa_decide_sys, json.dumps(payload),
                 cache_key=f"goa|{st}|{req['cpu_req']:.0f}|" +
