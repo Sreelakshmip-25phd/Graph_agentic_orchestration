@@ -1,0 +1,45 @@
+comparison,group,metric,n_pairs,mean_diff,ci95,p_wilcoxon,p_holm,significant,favours
+graph_memory - flat_memory,A. Task outcome,Acceptance (overall),10,-0.0014,0.0041,0.5234,1.0,False,
+graph_memory - flat_memory,A. Task outcome,"Acceptance, phase A",10,0.0012,0.0016,0.1875,1.0,False,
+graph_memory - flat_memory,A. Task outcome,"Acceptance, phase B",10,0.002,0.0072,0.5918,1.0,False,
+graph_memory - flat_memory,A. Task outcome,"Acceptance, phase C",10,-0.0067,0.0089,0.125,1.0,False,
+graph_memory - flat_memory,A. Task outcome,SLA-violation rate,10,0.0,0.0,,,False,
+graph_memory - flat_memory,A. Task outcome,Replan success rate,10,0.0188,0.0318,0.2324,1.0,False,
+graph_memory - flat_memory,A. Task outcome,Displaced services,10,-1.6,4.5892,0.4121,1.0,False,
+graph_memory - flat_memory,B. How memory helped,Memory precision (first try),10,0.4451,0.1058,0.002,0.0293,True,graph_memory
+graph_memory - flat_memory,B. How memory helped,Memory hit rate,10,-0.0013,0.0161,0.8457,1.0,False,
+graph_memory - flat_memory,B. How memory helped,Preemption regret,10,-0.0201,0.043,0.375,1.0,False,
+graph_memory - flat_memory,B. How memory helped,Acceptance drop after failure,10,-0.002,0.0188,0.4473,1.0,False,
+graph_memory - flat_memory,C. Memory cost,LLM reach / 100 req,10,0.2,0.763,0.334,1.0,False,
+graph_memory - flat_memory,C. Memory cost,LLM consultations / 100 req,10,0.01,0.8298,0.8613,1.0,False,
+graph_memory - flat_memory,C. Memory cost,LLM prompt tokens / 100 req,10,1475.52,550.5515,0.002,0.0293,True,flat_memory
+graph_memory - flat_memory,C. Memory cost,Decision latency mean (ms),10,3.834,2.6633,0.0098,0.127,False,
+graph_memory - flat_memory,C. Memory cost,Decision latency p95 (ms),10,-2.718,8.6945,0.9219,1.0,False,
+graph_memory - no_memory,A. Task outcome,Acceptance (overall),10,-0.0009,0.004,0.3789,1.0,False,
+graph_memory - no_memory,A. Task outcome,"Acceptance, phase A",10,0.003,0.002,0.0156,0.125,False,
+graph_memory - no_memory,A. Task outcome,"Acceptance, phase B",10,-0.002,0.0051,0.375,1.0,False,
+graph_memory - no_memory,A. Task outcome,"Acceptance, phase C",10,-0.0044,0.0119,0.3438,1.0,False,
+graph_memory - no_memory,A. Task outcome,SLA-violation rate,10,0.0,0.0,,,False,
+graph_memory - no_memory,A. Task outcome,Replan success rate,10,0.0191,0.0241,0.1484,0.7422,False,
+graph_memory - no_memory,A. Task outcome,Displaced services,10,-2.1,2.6862,0.1094,0.7383,False,
+graph_memory - no_memory,B. How memory helped,Preemption regret,10,-0.0238,0.0275,0.1055,0.7383,False,
+graph_memory - no_memory,B. How memory helped,Acceptance drop after failure,10,-0.0015,0.0158,0.752,1.0,False,
+graph_memory - no_memory,C. Memory cost,LLM reach / 100 req,10,-15.61,1.3918,0.002,0.0254,True,graph_memory
+graph_memory - no_memory,C. Memory cost,LLM consultations / 100 req,10,-15.56,1.4568,0.002,0.0254,True,graph_memory
+graph_memory - no_memory,C. Memory cost,LLM prompt tokens / 100 req,10,-10063.91,922.884,0.002,0.0254,True,graph_memory
+graph_memory - no_memory,C. Memory cost,Decision latency mean (ms),10,-64.991,8.3435,0.002,0.0254,True,graph_memory
+graph_memory - no_memory,C. Memory cost,Decision latency p95 (ms),10,-94.398,14.7195,0.002,0.0254,True,graph_memory
+flat_memory - no_memory,A. Task outcome,Acceptance (overall),10,0.0005,0.0023,0.6797,1.0,False,
+flat_memory - no_memory,A. Task outcome,"Acceptance, phase A",10,0.0018,0.0022,0.1562,1.0,False,
+flat_memory - no_memory,A. Task outcome,"Acceptance, phase B",10,-0.004,0.0071,0.1875,1.0,False,
+flat_memory - no_memory,A. Task outcome,"Acceptance, phase C",10,0.0023,0.0058,0.5938,1.0,False,
+flat_memory - no_memory,A. Task outcome,SLA-violation rate,10,0.0,0.0,,,False,
+flat_memory - no_memory,A. Task outcome,Replan success rate,10,0.0003,0.0208,0.9102,1.0,False,
+flat_memory - no_memory,A. Task outcome,Displaced services,10,-0.5,3.3426,1.0,1.0,False,
+flat_memory - no_memory,B. How memory helped,Preemption regret,10,-0.0037,0.034,1.0,1.0,False,
+flat_memory - no_memory,B. How memory helped,Acceptance drop after failure,10,0.0005,0.0181,0.7695,1.0,False,
+flat_memory - no_memory,C. Memory cost,LLM reach / 100 req,10,-15.81,1.6405,0.002,0.0254,True,flat_memory
+flat_memory - no_memory,C. Memory cost,LLM consultations / 100 req,10,-15.57,1.8322,0.002,0.0254,True,flat_memory
+flat_memory - no_memory,C. Memory cost,LLM prompt tokens / 100 req,10,-11539.43,1187.9226,0.002,0.0254,True,flat_memory
+flat_memory - no_memory,C. Memory cost,Decision latency mean (ms),10,-68.825,7.2125,0.002,0.0254,True,flat_memory
+flat_memory - no_memory,C. Memory cost,Decision latency p95 (ms),10,-91.68,16.1231,0.002,0.0254,True,flat_memory

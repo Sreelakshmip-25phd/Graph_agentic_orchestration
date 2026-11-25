@@ -1,0 +1,26 @@
+{
+ "model": [
+  "C:\\Users\\IIITK\\Documents\\John-Sree\\Edge-Orch\\local_llm\\Qwen2.5-7B-Instruct-Q4_K_M.gguf"
+ ],
+ "seeds": [
+  0,
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9
+ ],
+ "gates": {
+  "G1_flat_reproduces_earlier_study": true,
+  "G2_graph_acceptance_not_worse_than_flat": true,
+  "G3_graph_memory_precision_higher": true,
+  "G4_memory_reduces_llm_reach": true,
+  "G5_graph_prompt_overhead_at_most_25pct": true,
+  "secondary_graph_acceptance_higher": false
+ },
+ "definitions": "see STUDY.md"
+}

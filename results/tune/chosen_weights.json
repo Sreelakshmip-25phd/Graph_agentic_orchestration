@@ -1,0 +1,33 @@
+{
+ "chosen": "history",
+ "weights": {
+  "w_hist": 1.0,
+  "w_cap": 0.2,
+  "w_rule": 0.2,
+  "w_rtt": 0.1,
+  "w_fail": 0.3
+ },
+ "criterion": "highest mean acceptance on dev seeds; tie-break fewer LLM reaches",
+ "dev_seeds": [
+  100,
+  101,
+  102,
+  103,
+  104
+ ],
+ "per_setting": {
+  "history": {
+   "mean_acceptance": 0.8698,
+   "mean_llm_reach_per_100req": 32.48
+  },
+  "balanced": {
+   "mean_acceptance": 0.8694,
+   "mean_llm_reach_per_100req": 32.64
+  },
+  "risk": {
+   "mean_acceptance": 0.8688,
+   "mean_llm_reach_per_100req": 32.32
+  }
+ },
+ "model": "C:\\Users\\IIITK\\Documents\\John-Sree\\Edge-Orch\\local_llm\\Qwen2.5-7B-Instruct-Q4_K_M.gguf"
+}

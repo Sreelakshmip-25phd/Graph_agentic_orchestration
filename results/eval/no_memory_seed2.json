@@ -1,0 +1,279 @@
+{
+ "acceptance_overall": 0.857,
+ "acceptance_per_phase": {
+  "A": 0.935,
+  "B": 0.944,
+  "C": 0.706
+ },
+ "sla_violation_rate": 0.0,
+ "replanned": 6,
+ "migrations": 106,
+ "preemptions": 109,
+ "replan_success_rate": 0.767,
+ "displaced_final": 34,
+ "preemption_regret": 0.312,
+ "decision_ms_mean": 177.26,
+ "decision_ms_p95": 753.53,
+ "acceptance_over_time": [
+  {
+   "t": 0.0,
+   "offered": 21,
+   "acceptance": 1.0
+  },
+  {
+   "t": 300.0,
+   "offered": 14,
+   "acceptance": 1.0
+  },
+  {
+   "t": 600.0,
+   "offered": 16,
+   "acceptance": 1.0
+  },
+  {
+   "t": 900.0,
+   "offered": 26,
+   "acceptance": 1.0
+  },
+  {
+   "t": 1200.0,
+   "offered": 47,
+   "acceptance": 1.0
+  },
+  {
+   "t": 1500.0,
+   "offered": 42,
+   "acceptance": 0.976
+  },
+  {
+   "t": 1800.0,
+   "offered": 43,
+   "acceptance": 0.977
+  },
+  {
+   "t": 2100.0,
+   "offered": 37,
+   "acceptance": 1.0
+  },
+  {
+   "t": 2400.0,
+   "offered": 46,
+   "acceptance": 0.913
+  },
+  {
+   "t": 2700.0,
+   "offered": 41,
+   "acceptance": 0.829
+  },
+  {
+   "t": 3000.0,
+   "offered": 37,
+   "acceptance": 0.784
+  },
+  {
+   "t": 3300.0,
+   "offered": 30,
+   "acceptance": 0.833
+  },
+  {
+   "t": 3600.0,
+   "offered": 12,
+   "acceptance": 0.917
+  },
+  {
+   "t": 3900.0,
+   "offered": 10,
+   "acceptance": 1.0
+  },
+  {
+   "t": 4200.0,
+   "offered": 8,
+   "acceptance": 1.0
+  },
+  {
+   "t": 4500.0,
+   "offered": 14,
+   "acceptance": 1.0
+  },
+  {
+   "t": 4800.0,
+   "offered": 26,
+   "acceptance": 1.0
+  },
+  {
+   "t": 5100.0,
+   "offered": 30,
+   "acceptance": 1.0
+  },
+  {
+   "t": 5400.0,
+   "offered": 26,
+   "acceptance": 0.923
+  },
+  {
+   "t": 5700.0,
+   "offered": 25,
+   "acceptance": 1.0
+  },
+  {
+   "t": 6000.0,
+   "offered": 23,
+   "acceptance": 0.913
+  },
+  {
+   "t": 6300.0,
+   "offered": 20,
+   "acceptance": 1.0
+  },
+  {
+   "t": 6600.0,
+   "offered": 25,
+   "acceptance": 0.92
+  },
+  {
+   "t": 6900.0,
+   "offered": 31,
+   "acceptance": 0.774
+  },
+  {
+   "t": 7200.0,
+   "offered": 20,
+   "acceptance": 0.8
+  },
+  {
+   "t": 7500.0,
+   "offered": 14,
+   "acceptance": 0.857
+  },
+  {
+   "t": 7800.0,
+   "offered": 11,
+   "acceptance": 0.909
+  },
+  {
+   "t": 8100.0,
+   "offered": 13,
+   "acceptance": 0.923
+  },
+  {
+   "t": 8400.0,
+   "offered": 38,
+   "acceptance": 0.947
+  },
+  {
+   "t": 8700.0,
+   "offered": 55,
+   "acceptance": 0.636
+  },
+  {
+   "t": 9000.0,
+   "offered": 41,
+   "acceptance": 0.707
+  },
+  {
+   "t": 9300.0,
+   "offered": 31,
+   "acceptance": 0.645
+  },
+  {
+   "t": 9600.0,
+   "offered": 37,
+   "acceptance": 0.649
+  },
+  {
+   "t": 9900.0,
+   "offered": 33,
+   "acceptance": 0.606
+  },
+  {
+   "t": 10200.0,
+   "offered": 33,
+   "acceptance": 0.545
+  },
+  {
+   "t": 10500.0,
+   "offered": 24,
+   "acceptance": 0.625
+  },
+  {
+   "t": 10800.0,
+   "offered": 0,
+   "acceptance": null
+  }
+ ],
+ "adaptation_after_failure": [
+  {
+   "node": "n7",
+   "t_fail": 9720.0,
+   "ar_before": 0.756,
+   "n_before": 205,
+   "ar_after": 0.566,
+   "n_after": 106,
+   "ar_drop": 0.19
+  }
+ ],
+ "states": {
+  "COMPLETED": 823,
+  "REJECTED": 143,
+  "DISPLACED": 34
+ },
+ "invariants": {
+  "terminal": true,
+  "closed": true,
+  "no_breach": true
+ },
+ "model": "C:\\Users\\IIITK\\Documents\\John-Sree\\Edge-Orch\\local_llm\\Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+ "stage": "eval",
+ "system": "no_memory",
+ "seed": 2,
+ "workload": "wref",
+ "memory": "none",
+ "graph_weights": null,
+ "n_requests": 1000,
+ "wall_s": 276.9,
+ "memory_precision_first": null,
+ "memory_precision_all": null,
+ "memory_hit_rate": null,
+ "llm_reach_per_100req": 51.2,
+ "llm_asks_per_100req": 39.9,
+ "llm_prompt_tokens_per_100req": 24223.7,
+ "fresh_llm_calls": 390,
+ "fresh_llm_tokens": 395637,
+ "graph_lookup_ms_mean": null,
+ "graph_size": null,
+ "decision_trace": {},
+ "paths": {
+  "esc_llm_degraded": 9,
+  "esc_llm_unresolved": 177,
+  "esc_llm": 186,
+  "esc_preempt_local": 128,
+  "esc_preempt": 12,
+  "esc_episodic": 0,
+  "esc_procedural": 0
+ },
+ "counters": {
+  "cache_hits": 1146,
+  "escalations": 512,
+  "reached_llm_block": 512,
+  "esc_llm_degraded": 9,
+  "esc_llm_unresolved": 177,
+  "llm_asks": 399,
+  "llm_asks_goa_decide": 288,
+  "llm_prompt_chars": 968949,
+  "fresh_llm_calls": 390,
+  "esc_llm": 186,
+  "cross_zone": 112,
+  "llm_asks_preempt": 110,
+  "preemptions": 140,
+  "esc_preempt_local": 128,
+  "replans": 146,
+  "llm_asks_rule_author": 1,
+  "rules_authored": 1,
+  "esc_preempt": 12,
+  "surge_policies": 1,
+  "esc_episodic": 0,
+  "esc_procedural": 0,
+  "mem_first_attempts": 0,
+  "mem_attempts": 0
+ }
+}

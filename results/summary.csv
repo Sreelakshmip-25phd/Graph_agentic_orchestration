@@ -1,0 +1,48 @@
+group,metric,system,n_seeds,mean,ci95
+A. Task outcome,Acceptance (overall),graph_memory,10,0.8726,0.0081
+A. Task outcome,Acceptance (overall),flat_memory,10,0.874,0.01
+A. Task outcome,Acceptance (overall),no_memory,10,0.8735,0.0094
+A. Task outcome,"Acceptance, phase A",graph_memory,10,0.9371,0.0074
+A. Task outcome,"Acceptance, phase A",flat_memory,10,0.9359,0.0075
+A. Task outcome,"Acceptance, phase A",no_memory,10,0.9341,0.0073
+A. Task outcome,"Acceptance, phase B",graph_memory,10,0.9228,0.0163
+A. Task outcome,"Acceptance, phase B",flat_memory,10,0.9208,0.02
+A. Task outcome,"Acceptance, phase B",no_memory,10,0.9248,0.0153
+A. Task outcome,"Acceptance, phase C",graph_memory,10,0.7631,0.0223
+A. Task outcome,"Acceptance, phase C",flat_memory,10,0.7698,0.0244
+A. Task outcome,"Acceptance, phase C",no_memory,10,0.7675,0.0281
+A. Task outcome,SLA-violation rate,graph_memory,10,0.0,0.0
+A. Task outcome,SLA-violation rate,flat_memory,10,0.0,0.0
+A. Task outcome,SLA-violation rate,no_memory,10,0.0,0.0
+A. Task outcome,Replan success rate,graph_memory,10,0.7281,0.0232
+A. Task outcome,Replan success rate,flat_memory,10,0.7093,0.0242
+A. Task outcome,Replan success rate,no_memory,10,0.709,0.0161
+A. Task outcome,Displaced services,graph_memory,10,38.6,5.1717
+A. Task outcome,Displaced services,flat_memory,10,40.2,4.1411
+A. Task outcome,Displaced services,no_memory,10,40.7,4.1308
+B. How memory helped,Memory precision (first try),graph_memory,10,0.893,0.0459
+B. How memory helped,Memory precision (first try),flat_memory,10,0.4479,0.082
+B. How memory helped,Memory hit rate,graph_memory,10,0.084,0.0191
+B. How memory helped,Memory hit rate,flat_memory,10,0.0853,0.0109
+B. How memory helped,Preemption regret,graph_memory,10,0.3577,0.0286
+B. How memory helped,Preemption regret,flat_memory,10,0.3778,0.0337
+B. How memory helped,Preemption regret,no_memory,10,0.3815,0.0212
+B. How memory helped,Acceptance drop after failure,graph_memory,10,0.195,0.0346
+B. How memory helped,Acceptance drop after failure,flat_memory,10,0.197,0.0341
+B. How memory helped,Acceptance drop after failure,no_memory,10,0.1965,0.0349
+C. Memory cost,LLM reach / 100 req,graph_memory,10,31.31,1.984
+C. Memory cost,LLM reach / 100 req,flat_memory,10,31.11,1.4755
+C. Memory cost,LLM reach / 100 req,no_memory,10,46.92,2.726
+C. Memory cost,LLM consultations / 100 req,graph_memory,10,21.45,1.7449
+C. Memory cost,LLM consultations / 100 req,flat_memory,10,21.44,1.2605
+C. Memory cost,LLM consultations / 100 req,no_memory,10,37.01,2.2843
+C. Memory cost,LLM prompt tokens / 100 req,graph_memory,10,12138.57,1051.742
+C. Memory cost,LLM prompt tokens / 100 req,flat_memory,10,10663.05,659.1344
+C. Memory cost,LLM prompt tokens / 100 req,no_memory,10,22202.48,1389.1848
+C. Memory cost,Decision latency mean (ms),graph_memory,10,100.304,4.4997
+C. Memory cost,Decision latency mean (ms),flat_memory,10,96.47,5.1079
+C. Memory cost,Decision latency mean (ms),no_memory,10,165.295,10.3368
+C. Memory cost,Decision latency p95 (ms),graph_memory,10,667.047,11.9181
+C. Memory cost,Decision latency p95 (ms),flat_memory,10,669.765,14.3281
+C. Memory cost,Decision latency p95 (ms),no_memory,10,761.445,10.9223
+C. Memory cost,Graph lookup (ms),graph_memory,10,0.1604,0.0105

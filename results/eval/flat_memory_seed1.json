@@ -1,0 +1,283 @@
+{
+ "acceptance_overall": 0.869,
+ "acceptance_per_phase": {
+  "A": 0.94,
+  "B": 0.912,
+  "C": 0.757
+ },
+ "sla_violation_rate": 0.0,
+ "replanned": 3,
+ "migrations": 100,
+ "preemptions": 111,
+ "replan_success_rate": 0.696,
+ "displaced_final": 45,
+ "preemption_regret": 0.405,
+ "decision_ms_mean": 107.96,
+ "decision_ms_p95": 695.19,
+ "acceptance_over_time": [
+  {
+   "t": 0.0,
+   "offered": 22,
+   "acceptance": 1.0
+  },
+  {
+   "t": 300.0,
+   "offered": 19,
+   "acceptance": 1.0
+  },
+  {
+   "t": 600.0,
+   "offered": 16,
+   "acceptance": 1.0
+  },
+  {
+   "t": 900.0,
+   "offered": 23,
+   "acceptance": 1.0
+  },
+  {
+   "t": 1200.0,
+   "offered": 46,
+   "acceptance": 1.0
+  },
+  {
+   "t": 1500.0,
+   "offered": 42,
+   "acceptance": 1.0
+  },
+  {
+   "t": 1800.0,
+   "offered": 45,
+   "acceptance": 1.0
+  },
+  {
+   "t": 2100.0,
+   "offered": 41,
+   "acceptance": 0.927
+  },
+  {
+   "t": 2400.0,
+   "offered": 41,
+   "acceptance": 0.927
+  },
+  {
+   "t": 2700.0,
+   "offered": 46,
+   "acceptance": 0.891
+  },
+  {
+   "t": 3000.0,
+   "offered": 28,
+   "acceptance": 0.821
+  },
+  {
+   "t": 3300.0,
+   "offered": 31,
+   "acceptance": 0.742
+  },
+  {
+   "t": 3600.0,
+   "offered": 14,
+   "acceptance": 0.643
+  },
+  {
+   "t": 3900.0,
+   "offered": 14,
+   "acceptance": 0.857
+  },
+  {
+   "t": 4200.0,
+   "offered": 11,
+   "acceptance": 1.0
+  },
+  {
+   "t": 4500.0,
+   "offered": 15,
+   "acceptance": 1.0
+  },
+  {
+   "t": 4800.0,
+   "offered": 23,
+   "acceptance": 0.957
+  },
+  {
+   "t": 5100.0,
+   "offered": 28,
+   "acceptance": 1.0
+  },
+  {
+   "t": 5400.0,
+   "offered": 25,
+   "acceptance": 0.96
+  },
+  {
+   "t": 5700.0,
+   "offered": 24,
+   "acceptance": 1.0
+  },
+  {
+   "t": 6000.0,
+   "offered": 24,
+   "acceptance": 0.958
+  },
+  {
+   "t": 6300.0,
+   "offered": 24,
+   "acceptance": 0.875
+  },
+  {
+   "t": 6600.0,
+   "offered": 25,
+   "acceptance": 0.88
+  },
+  {
+   "t": 6900.0,
+   "offered": 23,
+   "acceptance": 0.739
+  },
+  {
+   "t": 7200.0,
+   "offered": 17,
+   "acceptance": 0.765
+  },
+  {
+   "t": 7500.0,
+   "offered": 18,
+   "acceptance": 0.833
+  },
+  {
+   "t": 7800.0,
+   "offered": 12,
+   "acceptance": 0.917
+  },
+  {
+   "t": 8100.0,
+   "offered": 19,
+   "acceptance": 0.947
+  },
+  {
+   "t": 8400.0,
+   "offered": 29,
+   "acceptance": 0.793
+  },
+  {
+   "t": 8700.0,
+   "offered": 42,
+   "acceptance": 0.881
+  },
+  {
+   "t": 9000.0,
+   "offered": 36,
+   "acceptance": 0.833
+  },
+  {
+   "t": 9300.0,
+   "offered": 49,
+   "acceptance": 0.776
+  },
+  {
+   "t": 9600.0,
+   "offered": 36,
+   "acceptance": 0.694
+  },
+  {
+   "t": 9900.0,
+   "offered": 33,
+   "acceptance": 0.545
+  },
+  {
+   "t": 10200.0,
+   "offered": 27,
+   "acceptance": 0.519
+  },
+  {
+   "t": 10500.0,
+   "offered": 32,
+   "acceptance": 0.719
+  },
+  {
+   "t": 10800.0,
+   "offered": 0,
+   "acceptance": null
+  }
+ ],
+ "adaptation_after_failure": [
+  {
+   "node": "n6",
+   "t_fail": 9720.0,
+   "ar_before": 0.838,
+   "n_before": 198,
+   "ar_after": 0.586,
+   "n_after": 111,
+   "ar_drop": 0.252
+  }
+ ],
+ "states": {
+  "COMPLETED": 824,
+  "DISPLACED": 45,
+  "REJECTED": 131
+ },
+ "invariants": {
+  "terminal": true,
+  "closed": true,
+  "no_breach": true
+ },
+ "model": "C:\\Users\\IIITK\\Documents\\John-Sree\\Edge-Orch\\local_llm\\Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+ "stage": "eval",
+ "system": "flat_memory",
+ "seed": 1,
+ "workload": "wref",
+ "memory": "flat",
+ "graph_weights": null,
+ "n_requests": 1000,
+ "wall_s": 164.0,
+ "memory_precision_first": 0.486,
+ "memory_precision_all": 0.48,
+ "memory_hit_rate": 0.072,
+ "llm_reach_per_100req": 33.7,
+ "llm_asks_per_100req": 25.2,
+ "llm_prompt_tokens_per_100req": 12743.2,
+ "fresh_llm_calls": 242,
+ "fresh_llm_tokens": 194366,
+ "graph_lookup_ms_mean": null,
+ "graph_size": null,
+ "decision_trace": {},
+ "paths": {
+  "esc_llm_degraded": 12,
+  "esc_preempt_local": 132,
+  "esc_digest": 124,
+  "esc_llm_unresolved": 176,
+  "esc_episodic": 36,
+  "esc_llm": 4,
+  "esc_preempt": 13,
+  "esc_procedural": 0
+ },
+ "counters": {
+  "cache_hits": 1148,
+  "escalations": 497,
+  "reached_llm_block": 337,
+  "esc_llm_degraded": 12,
+  "preemptions": 145,
+  "esc_preempt_local": 132,
+  "replans": 148,
+  "esc_digest": 124,
+  "esc_llm_unresolved": 176,
+  "cross_zone": 100,
+  "mem_attempts": 75,
+  "mem_success": 36,
+  "mem_first_attempts": 74,
+  "mem_first_success": 36,
+  "esc_episodic": 36,
+  "llm_asks": 252,
+  "llm_asks_preempt": 124,
+  "llm_prompt_chars": 509728,
+  "fresh_llm_calls": 242,
+  "llm_asks_rule_author": 1,
+  "rules_authored": 1,
+  "llm_asks_goa_decide": 127,
+  "esc_llm": 4,
+  "esc_preempt": 13,
+  "surge_policies": 1,
+  "esc_procedural": 0
+ }
+}
