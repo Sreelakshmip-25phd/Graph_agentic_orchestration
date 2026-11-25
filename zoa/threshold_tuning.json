@@ -1,0 +1,9 @@
+{
+ "backend": "minilm",
+ "tuning": {
+  "thr": 0.3,
+  "f1": 0.982,
+  "precision": 0.964,
+  "recall": 1.0
+ }
+}

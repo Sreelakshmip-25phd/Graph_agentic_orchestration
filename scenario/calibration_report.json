@@ -1,0 +1,9 @@
+{
+ "K": 48.0,
+ "greedy_acceptance_at_K": 0.812,
+ "target_band": [
+  0.8,
+  0.9
+ ],
+ "method": "lifetime scaling, bracket + bisection on the greedy baseline (seed 0)"
+}

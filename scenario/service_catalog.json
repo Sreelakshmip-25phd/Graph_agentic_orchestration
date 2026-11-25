@@ -1,0 +1,108 @@
+{
+ "services": {
+  "traffic_monitor": {
+   "phase": "A",
+   "cpu_scale": 0.6,
+   "mem_gb_base": 0.5,
+   "latency_ms": 200,
+   "data_locality": "any",
+   "priority": "normal",
+   "templates": [
+    "Monitor traffic flow at the {place} intersections and report congestion",
+    "Track vehicle counts around {place} continuously",
+    "Watch the {place} junctions for unusual traffic build-up"
+   ]
+  },
+  "video_analytics": {
+   "phase": "A",
+   "cpu_scale": 1.6,
+   "mem_gb_base": 2.0,
+   "latency_ms": 100,
+   "data_locality": "zone_local",
+   "priority": "high",
+   "templates": [
+    "Run video analytics on the {place} cameras, results within 100 ms, footage stays in the zone",
+    "Analyse the {place} camera feeds in real time without sending video out of the area",
+    "Detect incidents on the {place} surveillance streams with low latency"
+   ]
+  },
+  "iot_aggregator": {
+   "phase": "A",
+   "cpu_scale": 0.4,
+   "mem_gb_base": 0.5,
+   "latency_ms": 500,
+   "data_locality": "any",
+   "priority": "low",
+   "templates": [
+    "Aggregate the {place} air-quality sensor readings every few minutes",
+    "Collect and summarise environmental sensor data from {place}",
+    "Batch the {place} IoT telemetry and forward hourly summaries"
+   ]
+  },
+  "ar_session": {
+   "phase": "A",
+   "cpu_scale": 1.8,
+   "mem_gb_base": 1.5,
+   "latency_ms": 50,
+   "data_locality": "zone_local",
+   "priority": "high",
+   "templates": [
+    "Host an AR tourism session for visitors near {place} with under 50 ms response",
+    "Serve augmented-reality overlays for the {place} area, ultra low latency",
+    "Start an interactive AR guide around {place} for a walking tour"
+   ]
+  },
+  "federated_ml": {
+   "phase": "B",
+   "cpu_scale": 2.4,
+   "mem_gb_base": 4.0,
+   "latency_ms": 800,
+   "data_locality": "any",
+   "priority": "normal",
+   "templates": [
+    "Train the shared mobility model on local data from {place} without moving raw data",
+    "Run a federated learning round for the {place} district models",
+    "Contribute the {place} data partition to this week's federated training job"
+   ]
+  },
+  "digital_twin": {
+   "phase": "B",
+   "cpu_scale": 2.0,
+   "mem_gb_base": 3.0,
+   "latency_ms": 250,
+   "data_locality": "any",
+   "priority": "normal",
+   "templates": [
+    "Update the digital twin of the {place} energy grid with live readings",
+    "Simulate load scenarios on the {place} district twin",
+    "Keep the {place} infrastructure twin in sync with sensor state"
+   ]
+  },
+  "drone_control": {
+   "phase": "B",
+   "cpu_scale": 1.0,
+   "mem_gb_base": 1.0,
+   "latency_ms": 30,
+   "data_locality": "zone_local",
+   "priority": "critical",
+   "templates": [
+    "Coordinate the inspection drone over {place}, control loop under 30 ms, keep control local",
+    "Fly the survey drone across {place} with real-time obstacle avoidance",
+    "Run the drone path planner for the {place} corridor with hard latency limits"
+   ]
+  }
+ },
+ "resource_source": "alibaba_cluster_trace_v2018_batch_task",
+ "places": [
+  "stadium",
+  "central station",
+  "old town",
+  "market square",
+  "university campus",
+  "harbour district",
+  "tech park",
+  "exhibition centre",
+  "north ring",
+  "riverside"
+ ]
+}

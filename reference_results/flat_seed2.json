@@ -1,0 +1,18 @@
+{
+ "acceptance_overall": 0.855,
+ "acceptance_per_phase": {
+  "A": 0.922,
+  "B": 0.932,
+  "C": 0.723
+ },
+ "replan_success_rate": 0.709,
+ "displaced_final": 43,
+ "preemptions": 144,
+ "migrations": 101,
+ "goa_llm_calls": 232,
+ "goa_tokens": 204750,
+ "llm_per_100req": 23.2,
+ "llm_reach_per_100req": 34.7,
+ "decision_ms_mean": 116.56,
+ "decision_ms_p95": 706.53
+}

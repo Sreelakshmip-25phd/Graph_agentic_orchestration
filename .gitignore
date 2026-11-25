@@ -1,0 +1,18 @@
+# processed input data (only needed to regenerate workloads; not committed)
+data_foundation/
+
+# runtime artefacts
+llm_cache/
+results/dryrun/
+*.log
+
+# local LLM weights
+*.gguf
+*.bin
+*.safetensors
+
+# python
+__pycache__/
+*.pyc
+.venv/
+venv/

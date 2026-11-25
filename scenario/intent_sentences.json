@@ -1,0 +1,422 @@
+[
+ {
+  "service_type": "traffic_monitor",
+  "text": "Monitor traffic flow at the stadium intersections and report congestion"
+ },
+ {
+  "service_type": "traffic_monitor",
+  "text": "Monitor traffic flow at the central station intersections and report congestion"
+ },
+ {
+  "service_type": "traffic_monitor",
+  "text": "Monitor traffic flow at the old town intersections and report congestion"
+ },
+ {
+  "service_type": "traffic_monitor",
+  "text": "Monitor traffic flow at the market square intersections and report congestion"
+ },
+ {
+  "service_type": "traffic_monitor",
+  "text": "Monitor traffic flow at the university campus intersections and report congestion"
+ },
+ {
+  "service_type": "traffic_monitor",
+  "text": "Track vehicle counts around stadium continuously"
+ },
+ {
+  "service_type": "traffic_monitor",
+  "text": "Track vehicle counts around central station continuously"
+ },
+ {
+  "service_type": "traffic_monitor",
+  "text": "Track vehicle counts around old town continuously"
+ },
+ {
+  "service_type": "traffic_monitor",
+  "text": "Track vehicle counts around market square continuously"
+ },
+ {
+  "service_type": "traffic_monitor",
+  "text": "Track vehicle counts around university campus continuously"
+ },
+ {
+  "service_type": "traffic_monitor",
+  "text": "Watch the stadium junctions for unusual traffic build-up"
+ },
+ {
+  "service_type": "traffic_monitor",
+  "text": "Watch the central station junctions for unusual traffic build-up"
+ },
+ {
+  "service_type": "traffic_monitor",
+  "text": "Watch the old town junctions for unusual traffic build-up"
+ },
+ {
+  "service_type": "traffic_monitor",
+  "text": "Watch the market square junctions for unusual traffic build-up"
+ },
+ {
+  "service_type": "traffic_monitor",
+  "text": "Watch the university campus junctions for unusual traffic build-up"
+ },
+ {
+  "service_type": "video_analytics",
+  "text": "Run video analytics on the stadium cameras, results within 100 ms, footage stays in the zone"
+ },
+ {
+  "service_type": "video_analytics",
+  "text": "Run video analytics on the central station cameras, results within 100 ms, footage stays in the zone"
+ },
+ {
+  "service_type": "video_analytics",
+  "text": "Run video analytics on the old town cameras, results within 100 ms, footage stays in the zone"
+ },
+ {
+  "service_type": "video_analytics",
+  "text": "Run video analytics on the market square cameras, results within 100 ms, footage stays in the zone"
+ },
+ {
+  "service_type": "video_analytics",
+  "text": "Run video analytics on the university campus cameras, results within 100 ms, footage stays in the zone"
+ },
+ {
+  "service_type": "video_analytics",
+  "text": "Analyse the stadium camera feeds in real time without sending video out of the area"
+ },
+ {
+  "service_type": "video_analytics",
+  "text": "Analyse the central station camera feeds in real time without sending video out of the area"
+ },
+ {
+  "service_type": "video_analytics",
+  "text": "Analyse the old town camera feeds in real time without sending video out of the area"
+ },
+ {
+  "service_type": "video_analytics",
+  "text": "Analyse the market square camera feeds in real time without sending video out of the area"
+ },
+ {
+  "service_type": "video_analytics",
+  "text": "Analyse the university campus camera feeds in real time without sending video out of the area"
+ },
+ {
+  "service_type": "video_analytics",
+  "text": "Detect incidents on the stadium surveillance streams with low latency"
+ },
+ {
+  "service_type": "video_analytics",
+  "text": "Detect incidents on the central station surveillance streams with low latency"
+ },
+ {
+  "service_type": "video_analytics",
+  "text": "Detect incidents on the old town surveillance streams with low latency"
+ },
+ {
+  "service_type": "video_analytics",
+  "text": "Detect incidents on the market square surveillance streams with low latency"
+ },
+ {
+  "service_type": "video_analytics",
+  "text": "Detect incidents on the university campus surveillance streams with low latency"
+ },
+ {
+  "service_type": "iot_aggregator",
+  "text": "Aggregate the stadium air-quality sensor readings every few minutes"
+ },
+ {
+  "service_type": "iot_aggregator",
+  "text": "Aggregate the central station air-quality sensor readings every few minutes"
+ },
+ {
+  "service_type": "iot_aggregator",
+  "text": "Aggregate the old town air-quality sensor readings every few minutes"
+ },
+ {
+  "service_type": "iot_aggregator",
+  "text": "Aggregate the market square air-quality sensor readings every few minutes"
+ },
+ {
+  "service_type": "iot_aggregator",
+  "text": "Aggregate the university campus air-quality sensor readings every few minutes"
+ },
+ {
+  "service_type": "iot_aggregator",
+  "text": "Collect and summarise environmental sensor data from stadium"
+ },
+ {
+  "service_type": "iot_aggregator",
+  "text": "Collect and summarise environmental sensor data from central station"
+ },
+ {
+  "service_type": "iot_aggregator",
+  "text": "Collect and summarise environmental sensor data from old town"
+ },
+ {
+  "service_type": "iot_aggregator",
+  "text": "Collect and summarise environmental sensor data from market square"
+ },
+ {
+  "service_type": "iot_aggregator",
+  "text": "Collect and summarise environmental sensor data from university campus"
+ },
+ {
+  "service_type": "iot_aggregator",
+  "text": "Batch the stadium IoT telemetry and forward hourly summaries"
+ },
+ {
+  "service_type": "iot_aggregator",
+  "text": "Batch the central station IoT telemetry and forward hourly summaries"
+ },
+ {
+  "service_type": "iot_aggregator",
+  "text": "Batch the old town IoT telemetry and forward hourly summaries"
+ },
+ {
+  "service_type": "iot_aggregator",
+  "text": "Batch the market square IoT telemetry and forward hourly summaries"
+ },
+ {
+  "service_type": "iot_aggregator",
+  "text": "Batch the university campus IoT telemetry and forward hourly summaries"
+ },
+ {
+  "service_type": "ar_session",
+  "text": "Host an AR tourism session for visitors near stadium with under 50 ms response"
+ },
+ {
+  "service_type": "ar_session",
+  "text": "Host an AR tourism session for visitors near central station with under 50 ms response"
+ },
+ {
+  "service_type": "ar_session",
+  "text": "Host an AR tourism session for visitors near old town with under 50 ms response"
+ },
+ {
+  "service_type": "ar_session",
+  "text": "Host an AR tourism session for visitors near market square with under 50 ms response"
+ },
+ {
+  "service_type": "ar_session",
+  "text": "Host an AR tourism session for visitors near university campus with under 50 ms response"
+ },
+ {
+  "service_type": "ar_session",
+  "text": "Serve augmented-reality overlays for the stadium area, ultra low latency"
+ },
+ {
+  "service_type": "ar_session",
+  "text": "Serve augmented-reality overlays for the central station area, ultra low latency"
+ },
+ {
+  "service_type": "ar_session",
+  "text": "Serve augmented-reality overlays for the old town area, ultra low latency"
+ },
+ {
+  "service_type": "ar_session",
+  "text": "Serve augmented-reality overlays for the market square area, ultra low latency"
+ },
+ {
+  "service_type": "ar_session",
+  "text": "Serve augmented-reality overlays for the university campus area, ultra low latency"
+ },
+ {
+  "service_type": "ar_session",
+  "text": "Start an interactive AR guide around stadium for a walking tour"
+ },
+ {
+  "service_type": "ar_session",
+  "text": "Start an interactive AR guide around central station for a walking tour"
+ },
+ {
+  "service_type": "ar_session",
+  "text": "Start an interactive AR guide around old town for a walking tour"
+ },
+ {
+  "service_type": "ar_session",
+  "text": "Start an interactive AR guide around market square for a walking tour"
+ },
+ {
+  "service_type": "ar_session",
+  "text": "Start an interactive AR guide around university campus for a walking tour"
+ },
+ {
+  "service_type": "federated_ml",
+  "text": "Train the shared mobility model on local data from stadium without moving raw data"
+ },
+ {
+  "service_type": "federated_ml",
+  "text": "Train the shared mobility model on local data from central station without moving raw data"
+ },
+ {
+  "service_type": "federated_ml",
+  "text": "Train the shared mobility model on local data from old town without moving raw data"
+ },
+ {
+  "service_type": "federated_ml",
+  "text": "Train the shared mobility model on local data from market square without moving raw data"
+ },
+ {
+  "service_type": "federated_ml",
+  "text": "Train the shared mobility model on local data from university campus without moving raw data"
+ },
+ {
+  "service_type": "federated_ml",
+  "text": "Run a federated learning round for the stadium district models"
+ },
+ {
+  "service_type": "federated_ml",
+  "text": "Run a federated learning round for the central station district models"
+ },
+ {
+  "service_type": "federated_ml",
+  "text": "Run a federated learning round for the old town district models"
+ },
+ {
+  "service_type": "federated_ml",
+  "text": "Run a federated learning round for the market square district models"
+ },
+ {
+  "service_type": "federated_ml",
+  "text": "Run a federated learning round for the university campus district models"
+ },
+ {
+  "service_type": "federated_ml",
+  "text": "Contribute the stadium data partition to this week's federated training job"
+ },
+ {
+  "service_type": "federated_ml",
+  "text": "Contribute the central station data partition to this week's federated training job"
+ },
+ {
+  "service_type": "federated_ml",
+  "text": "Contribute the old town data partition to this week's federated training job"
+ },
+ {
+  "service_type": "federated_ml",
+  "text": "Contribute the market square data partition to this week's federated training job"
+ },
+ {
+  "service_type": "federated_ml",
+  "text": "Contribute the university campus data partition to this week's federated training job"
+ },
+ {
+  "service_type": "digital_twin",
+  "text": "Update the digital twin of the stadium energy grid with live readings"
+ },
+ {
+  "service_type": "digital_twin",
+  "text": "Update the digital twin of the central station energy grid with live readings"
+ },
+ {
+  "service_type": "digital_twin",
+  "text": "Update the digital twin of the old town energy grid with live readings"
+ },
+ {
+  "service_type": "digital_twin",
+  "text": "Update the digital twin of the market square energy grid with live readings"
+ },
+ {
+  "service_type": "digital_twin",
+  "text": "Update the digital twin of the university campus energy grid with live readings"
+ },
+ {
+  "service_type": "digital_twin",
+  "text": "Simulate load scenarios on the stadium district twin"
+ },
+ {
+  "service_type": "digital_twin",
+  "text": "Simulate load scenarios on the central station district twin"
+ },
+ {
+  "service_type": "digital_twin",
+  "text": "Simulate load scenarios on the old town district twin"
+ },
+ {
+  "service_type": "digital_twin",
+  "text": "Simulate load scenarios on the market square district twin"
+ },
+ {
+  "service_type": "digital_twin",
+  "text": "Simulate load scenarios on the university campus district twin"
+ },
+ {
+  "service_type": "digital_twin",
+  "text": "Keep the stadium infrastructure twin in sync with sensor state"
+ },
+ {
+  "service_type": "digital_twin",
+  "text": "Keep the central station infrastructure twin in sync with sensor state"
+ },
+ {
+  "service_type": "digital_twin",
+  "text": "Keep the old town infrastructure twin in sync with sensor state"
+ },
+ {
+  "service_type": "digital_twin",
+  "text": "Keep the market square infrastructure twin in sync with sensor state"
+ },
+ {
+  "service_type": "digital_twin",
+  "text": "Keep the university campus infrastructure twin in sync with sensor state"
+ },
+ {
+  "service_type": "drone_control",
+  "text": "Coordinate the inspection drone over stadium, control loop under 30 ms, keep control local"
+ },
+ {
+  "service_type": "drone_control",
+  "text": "Coordinate the inspection drone over central station, control loop under 30 ms, keep control local"
+ },
+ {
+  "service_type": "drone_control",
+  "text": "Coordinate the inspection drone over old town, control loop under 30 ms, keep control local"
+ },
+ {
+  "service_type": "drone_control",
+  "text": "Coordinate the inspection drone over market square, control loop under 30 ms, keep control local"
+ },
+ {
+  "service_type": "drone_control",
+  "text": "Coordinate the inspection drone over university campus, control loop under 30 ms, keep control local"
+ },
+ {
+  "service_type": "drone_control",
+  "text": "Fly the survey drone across stadium with real-time obstacle avoidance"
+ },
+ {
+  "service_type": "drone_control",
+  "text": "Fly the survey drone across central station with real-time obstacle avoidance"
+ },
+ {
+  "service_type": "drone_control",
+  "text": "Fly the survey drone across old town with real-time obstacle avoidance"
+ },
+ {
+  "service_type": "drone_control",
+  "text": "Fly the survey drone across market square with real-time obstacle avoidance"
+ },
+ {
+  "service_type": "drone_control",
+  "text": "Fly the survey drone across university campus with real-time obstacle avoidance"
+ },
+ {
+  "service_type": "drone_control",
+  "text": "Run the drone path planner for the stadium corridor with hard latency limits"
+ },
+ {
+  "service_type": "drone_control",
+  "text": "Run the drone path planner for the central station corridor with hard latency limits"
+ },
+ {
+  "service_type": "drone_control",
+  "text": "Run the drone path planner for the old town corridor with hard latency limits"
+ },
+ {
+  "service_type": "drone_control",
+  "text": "Run the drone path planner for the market square corridor with hard latency limits"
+ },
+ {
+  "service_type": "drone_control",
+  "text": "Run the drone path planner for the university campus corridor with hard latency limits"
+ }
+]
