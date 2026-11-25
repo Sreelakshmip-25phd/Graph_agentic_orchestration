@@ -118,10 +118,24 @@ def main():
         if ("flat_memory", s) not in runs or not os.path.exists(ref_p):
             continue
         ref, new = json.load(open(ref_p)), runs[("flat_memory", s)]
-        for k in ("acceptance_overall", "llm_reach_per_100req", "preemptions",
+        for k in ("acceptance_overall", "llm_reach_per_100req",
                   "migrations", "replan_success_rate"):
             rep_rows.append({"seed": s, "metric": k, "earlier_study": ref.get(k),
                              "this_run": new.get(k)})
+        # The earlier study's "preemptions" counted eviction events. Results
+        # written before both counts existed have "preemptions" = distinct
+        # services and no event count (the event log is not saved).
+        events = new.get("preemption_events")
+        services = new.get("preempted_services", new.get("preemptions")
+                           if events is None else None)
+        rep_rows += [
+            {"seed": s, "metric": "preemption_events",
+             "earlier_study": ref.get("preemptions"), "this_run": events},
+            {"seed": s, "metric": "preempted_services",
+             "earlier_study": None, "this_run": services},
+            {"seed": s, "metric": "goa_preemption_decisions",
+             "earlier_study": None,
+             "this_run": new.get("counters", {}).get("preemptions")}]
     rep_ok = None
     if rep_rows:
         d_ar = [abs(r["this_run"] - r["earlier_study"]) for r in rep_rows

@@ -99,3 +99,14 @@ inter-zone RTTs are 4–9 ms against a tightest budget of 30 ms. So W-ref is exp
 to show **decision precision and non-inferiority**, not large acceptance gains.
 The Stress workload (next step, separate protocol) is where relational memory is
 expected to change outcomes.
+
+## Deviations (recorded after results existed)
+
+- **Preemption count (reporting only, no gate affected).** The W-ref run's
+  `preemptions` field counted distinct evicted services, while the earlier
+  study counted eviction events (a service evicted twice counts twice). From
+  the Stress workload on, `audit()` reports both, as `preemption_events` and
+  `preempted_services`; preemption regret keeps distinct services as its
+  denominator. W-ref result files were not re-run: the reproduction check
+  reports their distinct-service count and the GOA's preemption-decision
+  counter, and leaves the event count empty.

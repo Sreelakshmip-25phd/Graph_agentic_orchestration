@@ -261,6 +261,11 @@ class Simulation:
         migrations = sum(1 for e in s.event_log if e["ev"] == "migrated")
         displaced_final = states.get("DISPLACED", 0)
         attempts = replanned + migrations + displaced_final
+        # Two preemption counts. Events = every eviction (a service evicted,
+        # migrated and evicted again counts twice), as the earlier study
+        # counted. Services = distinct evicted services, the denominator of
+        # preemption regret.
+        preemption_events = sum(1 for e in s.event_log if e["ev"] == "preempted")
         preempted = {e["req"] for e in s.event_log if e["ev"] == "preempted"}
         victims_displaced = sum(1 for r in preempted
                                 if s.services[r]["state"] == "DISPLACED")
@@ -300,7 +305,8 @@ class Simulation:
             "sla_violation_rate": round(sla_viol / sla_n, 4) if sla_n else 0.0,
             "replanned": replanned,
             "migrations": migrations,
-            "preemptions": len(preempted),
+            "preemption_events": preemption_events,
+            "preempted_services": len(preempted),
             "replan_success_rate": (round((replanned + migrations) / attempts, 3)
                                     if attempts else None),
             "displaced_final": displaced_final,
